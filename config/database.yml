@@ -84,6 +84,6 @@ test:
 production:
   <<: *default
   database: localize_production
-# username: localize
   host: <%= ENV['$OPENSHIFT_POSTGRESQL_DB_HOST:$OPENSHIFT_POSTGRESQL_DB_PORT'] %>
-# password: <%= ENV['LOCALIZE_DATABASE_PASSWORD'] %>
+#  username: localize
+#  password: <%= ENV['LOCALIZE_DATABASE_PASSWORD'] %>
