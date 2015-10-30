@@ -25,7 +25,7 @@ class PromotionsController < ApplicationController
   # POST /promotions.json
   def create
     @promotion = Promotion.new(promotion_params)
-
+    
     respond_to do |format|
       if @promotion.save
         format.html { redirect_to @promotion, notice: 'Promotion was successfully created.' }
@@ -69,6 +69,6 @@ class PromotionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def promotion_params
-      params.require(:promotion).permit(:title, :description, :banner_url, :date_of_creation, :end_date, :duration_flag, :quantity)
+      params.require(:promotion).permit(:title, :description, :banner_url, :date_of_creation, :end_date, :quantity)
     end
 end
