@@ -1,4 +1,4 @@
-# PostgreSQL. Versions 8.2 and up are supported.
+
 #
 # Install the pg driver:
 #   gem install pg
@@ -84,5 +84,6 @@ test:
 production:
   <<: *default
   database: localize_production
-  username: localize
-  password: <%= ENV['LOCALIZE_DATABASE_PASSWORD'] %>
+# username: localize
+  host: <%= ENV['$OPENSHIFT_POSTGRESQL_DB_HOST:$OPENSHIFT_POSTGRESQL_DB_PORT'] %>
+# password: <%= ENV['LOCALIZE_DATABASE_PASSWORD'] %>
