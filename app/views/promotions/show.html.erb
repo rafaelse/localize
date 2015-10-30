@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @promotion.title %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @promotion.description %>
+</p>
+
+<p>
+  <strong>Banner url:</strong>
+  <%= @promotion.banner_url %>
+</p>
+
+<p>
+  <strong>Date of creation:</strong>
+  <%= @promotion.date_of_creation %>
+</p>
+
+<p>
+  <strong>End date:</strong>
+  <%= @promotion.end_date %>
+</p>
+
+<p>
+  <strong>Duration flag:</strong>
+  <%= @promotion.duration_flag %>
+</p>
+
+<p>
+  <strong>Quantity:</strong>
+  <%= @promotion.quantity %>
+</p>
+
+<%= link_to 'Edit', edit_promotion_path(@promotion) %> |
+<%= link_to 'Back', promotions_path %>

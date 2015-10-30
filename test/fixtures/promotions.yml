@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  description: MyString
+  banner_url: MyString
+  date_of_creation: 2015-10-29
+  end_date: 2015-10-29
+  duration_flag: MyString
+  quantity: 1
+
+two:
+  title: MyString
+  description: MyString
+  banner_url: MyString
+  date_of_creation: 2015-10-29
+  end_date: 2015-10-29
+  duration_flag: MyString
+  quantity: 1
