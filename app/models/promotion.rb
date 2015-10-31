@@ -1,8 +1,9 @@
 class Promotion < ActiveRecord::Base
+  has_attached_file :banner, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/:style/missing.png"
+  validates_attachment_content_type :banner, content_type: /\Aimage\/.*\Z/
   validates :title, :description, :date_of_creation, :end_date, :quantity, presence: true
   validates :quantity, numericality: {only_integer: true, greater_than: 0}
   validates :title, uniqueness: true                                                                                                                                                                                             
-  validates :banner_url, allow_blank: true, format: {with: %r{\.(gif|jpg|png)\Z}i, message: 'must be a URL for GIF, JPG or PNG image.'}
   validate :at_least_one_day_long
   
   private

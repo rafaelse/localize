@@ -20,7 +20,7 @@
       <tr>
         <td><%= promotion.title %></td>
         <td><%= promotion.description %></td>
-        <td><%= promotion.banner_url %></td>
+        <td><%= image_tag promotion.banner(:thumb) %></td>
         <td><%= promotion.date_of_creation %></td>
         <td><%= promotion.end_date %></td>
         <td><%= promotion.quantity %></td>
