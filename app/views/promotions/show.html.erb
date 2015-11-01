@@ -11,6 +11,11 @@
 </p>
 
 <p>
+  <strong>Category:</strong>
+  <%= @promotion.category.name unless @promotion.category.nil?  %>
+</p>
+
+<p>
   <strong>Banner</strong>
   <%= image_tag @promotion.banner.url(:medium) %>
 </p>

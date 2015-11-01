@@ -7,7 +7,8 @@
     <tr>
       <th>Title</th>
       <th>Description</th>
-      <th>Banner url</th>
+      <th>Category</th>
+      <th>Banner</th>
       <th>Date of creation</th>
       <th>End date</th>
       <th>Quantity</th>
@@ -20,6 +21,7 @@
       <tr>
         <td><%= promotion.title %></td>
         <td><%= promotion.description %></td>
+        <td><%= promotion.category.name unless promotion.category.nil?  %></td>
         <td><%= image_tag promotion.banner(:thumb) %></td>
         <td><%= promotion.date_of_creation %></td>
         <td><%= promotion.end_date %></td>

@@ -11,10 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151031101348) do
+ActiveRecord::Schema.define(version: 20151031124550) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "categories", force: :cascade do |t|
+    t.string  "name"
+    t.integer "parent_id"
+  end
 
   create_table "promotions", force: :cascade do |t|
     t.string   "title"
@@ -28,6 +33,10 @@ ActiveRecord::Schema.define(version: 20151031101348) do
     t.string   "banner_content_type"
     t.integer  "banner_file_size"
     t.datetime "banner_updated_at"
+    t.integer  "category_id"
   end
 
+  add_index "promotions", ["category_id"], name: "index_promotions_on_category_id", using: :btree
+
+  add_foreign_key "promotions", "categories"
 end

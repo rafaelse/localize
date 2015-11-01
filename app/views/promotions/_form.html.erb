@@ -20,12 +20,12 @@
     <%= f.text_area :description, rows: 15 %>
   </div>
   <div class="field">
-    <%= f.label :banner %><br>
-    <%= f.file_field :banner %>
+  	<%= f.label :category_id %><br>
+  	<%= select :promotion, :category_id, @categories %>
   </div>
   <div class="field">
-    <%= f.label :date_of_creation %><br>
-    <%= f.date_select :date_of_creation %>
+    <%= f.label :banner %><br>
+    <%= f.file_field :banner %>
   </div>
   <div class="field">
     <%= f.label :end_date %><br>

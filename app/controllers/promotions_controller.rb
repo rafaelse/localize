@@ -1,6 +1,6 @@
 class PromotionsController < ApplicationController
   before_action :set_promotion, only: [:show, :edit, :update, :destroy]
-
+  before_filter :create_categories_structure, :except => [:index, :show]
   # GET /promotions
   # GET /promotions.json
   def index
@@ -25,7 +25,8 @@ class PromotionsController < ApplicationController
   # POST /promotions.json
   def create
     @promotion = Promotion.new(promotion_params)
-    
+    @promotion.date_of_creation = Date.parse(Time.now.to_s)
+
     respond_to do |format|
       if @promotion.save
         format.html { redirect_to @promotion, notice: 'Promotion was successfully created.' }
@@ -62,13 +63,27 @@ class PromotionsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_promotion
-      @promotion = Promotion.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def promotion_params
-      params.require(:promotion).permit(:title, :description, :banner, :date_of_creation, :end_date, :quantity)
+  # Use callbacks to share common setup or constraints between actions.
+  def set_promotion
+    @promotion = Promotion.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def promotion_params
+    params.require(:promotion).permit(:title, :description, :banner, :date_of_creation, :end_date, :quantity, :category_id)
+  end
+  
+  def create_categories_structure
+    @categories ||= categories_tree(Category.where(parent_category: nil).order(:name))
+  end
+
+  def categories_tree(categories)
+    result = []
+    categories.each do |category|
+      result << [('&nbsp;' * category.depth).html_safe + category.name, category.id]
+      result += categories_tree(category.subcategories.order(:name)) unless category.subcategories.blank?
     end
+    result
+  end
 end
