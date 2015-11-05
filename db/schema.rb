@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151031124550) do
+ActiveRecord::Schema.define(version: 20151104210132) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,8 +24,8 @@ ActiveRecord::Schema.define(version: 20151031124550) do
   create_table "promotions", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
-    t.date     "date_of_creation"
-    t.date     "end_date"
+    t.date     "valid_from"
+    t.date     "valid_to"
     t.integer  "quantity"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20151031124550) do
     t.integer  "banner_file_size"
     t.datetime "banner_updated_at"
     t.integer  "category_id"
+    t.decimal  "price"
   end
 
   add_index "promotions", ["category_id"], name: "index_promotions_on_category_id", using: :btree

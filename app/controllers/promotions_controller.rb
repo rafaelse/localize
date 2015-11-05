@@ -1,5 +1,6 @@
 class PromotionsController < ApplicationController
   before_action :set_promotion, only: [:show, :edit, :update, :destroy]
+#  before_action :check_unlimited, only: [:create, :update]
   before_filter :create_categories_structure, :except => [:index, :show]
   # GET /promotions
   # GET /promotions.json
@@ -25,8 +26,7 @@ class PromotionsController < ApplicationController
   # POST /promotions.json
   def create
     @promotion = Promotion.new(promotion_params)
-    @promotion.date_of_creation = Date.parse(Time.now.to_s)
-
+    check_unlimited
     respond_to do |format|
       if @promotion.save
         format.html { redirect_to @promotion, notice: 'Promotion was successfully created.' }
@@ -41,8 +41,10 @@ class PromotionsController < ApplicationController
   # PATCH/PUT /promotions/1
   # PATCH/PUT /promotions/1.json
   def update
+    @promotion.attributes = promotion_params
+    check_unlimited
     respond_to do |format|
-      if @promotion.update(promotion_params)
+      if @promotion.save
         format.html { redirect_to @promotion, notice: 'Promotion was successfully updated.' }
         format.json { render :show, status: :ok, location: @promotion }
       else
@@ -63,6 +65,11 @@ class PromotionsController < ApplicationController
   end
 
   private
+  
+  def check_unlimited
+    @promotion.valid_to = nil if params[:unlimited_time]
+    @promotion.quantity = -1 if params[:unlimited_quantity]
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_promotion
@@ -71,11 +78,16 @@ class PromotionsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def promotion_params
-    params.require(:promotion).permit(:title, :description, :banner, :date_of_creation, :end_date, :quantity, :category_id)
+    params.require(:promotion).permit(:title, :description, :banner, :valid_from, :valid_to, :quantity, :category_id, :price)
   end
   
   def create_categories_structure
-    @categories ||= categories_tree(Category.where(parent_category: nil).order(:name))
+    @categories = []
+    category_set = Category.where(parent_category: nil).order(:name)
+    unless category_set.empty?
+      @categories = categories_tree(Category.where(parent_category: nil).order(:name))
+    end
+    @categories
   end
 
   def categories_tree(categories)
