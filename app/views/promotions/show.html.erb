@@ -1,38 +1,53 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Title:</strong>
-  <%= @promotion.title %>
+<p id="notice">
+	<%= notice %>
 </p>
 
 <p>
-  <strong>Description:</strong>
-  <%= @promotion.description %>
+	<strong>Title:</strong>
+	<%= @promotion.title %>
 </p>
 
 <p>
-  <strong>Category:</strong>
-  <%= @promotion.category.name unless @promotion.category.nil?  %>
+	<strong>Description:</strong>
+	<%= @promotion.description %>
 </p>
 
 <p>
-  <strong>Banner</strong>
-  <%= image_tag @promotion.banner.url(:medium) %>
+	<strong>Category:</strong>
+	<%= @promotion.category.name unless @promotion.category.nil?  %>
 </p>
 
 <p>
-  <strong>Date of creation:</strong>
-  <%= @promotion.date_of_creation %>
+	<strong>Banner</strong>
+	<%= image_tag @promotion.banner.url(:medium) %>
 </p>
 
 <p>
-  <strong>End date:</strong>
-  <%= @promotion.end_date %>
+	<strong>Valid from:</strong>
+	<%= @promotion.valid_from.strftime("%b/%d/%Y") %>
 </p>
 
 <p>
-  <strong>Quantity:</strong>
-  <%= @promotion.quantity %>
+	<strong>Valid to:</strong>
+	<% if @promotion.valid_to %>
+	<%= @promotion.valid_to.strftime("%b/%d/%Y")%>
+	<% else %>
+	<%= "Unlimited Time"%>
+	<% end %>
+</p>
+
+<p>
+	<strong>Quantity:</strong>
+	<% if @promotion.quantity > -1 %>
+	<%= @promotion.quantity %>
+	<% else %>
+	<%= "Unlimited Quantity"%>
+	<% end %>
+</p>
+
+<p>
+	<strong>Price:</strong>
+	<%= number_to_currency(@promotion.price) %>
 </p>
 
 <%= link_to 'Edit', edit_promotion_path(@promotion) %> |

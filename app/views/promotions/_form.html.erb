@@ -1,41 +1,65 @@
 <%= form_for(@promotion, html: {multipart: true}) do |f| %>
-  <% if @promotion.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@promotion.errors.count, "error") %> prohibited this promotion from being saved:</h2>
+<% if @promotion.errors.any? %>
+<div id="error_explanation">
+	<h2><%= pluralize(@promotion.errors.count, "error") %> prohibited this promotion from being saved:</h2>
 
-      <ul>
-      <% @promotion.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+	<ul>
+		<% @promotion.errors.full_messages.each do |message| %>
+		<li>
+			<%= message %>
+		</li>
+		<% end %>
+	</ul>
+</div>
+<% end %>
 
-  <div class="field">
-    <%= f.label :title %><br>
-    <%= f.text_field :title %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_area :description, rows: 15 %>
-  </div>
-  <div class="field">
-  	<%= f.label :category_id %><br>
-  	<%= select :promotion, :category_id, @categories %>
-  </div>
-  <div class="field">
-    <%= f.label :banner %><br>
-    <%= f.file_field :banner %>
-  </div>
-  <div class="field">
-    <%= f.label :end_date %><br>
-    <%= f.date_select :end_date %>
-  </div>
-  <div class="field">
-    <%= f.label :quantity %><br>
-    <%= f.number_field :quantity %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<div class="field">
+	<%= f.label :title %>
+	<br>
+	<%= f.text_field :title %>
+</div>
+<div class="field">
+	<%= f.label :description %>
+	<br>
+	<%= f.text_area :description, rows: 15 %>
+</div>
+<div class="field">
+	<%= f.label :category_id %>
+	<br>
+	<%= select :promotion, :category_id, @categories %>
+</div>
+<div class="field">
+	<%= f.label :banner %>
+	<br>
+	<%= f.file_field :banner %>
+</div>
+<div class="field">
+	<%= f.label :valid_from %>
+	<br>
+	<%= f.date_select :valid_from, selected: Date.today %>
+</div>
+<div class="field">
+	<%= f.label :valid_to %>
+	<br>
+	<%= f.date_select :valid_to %>
+	&nbsp;
+	<%= check_box_tag(:unlimited_time)%>
+	<%= label_tag(:unlimited_time, "Unlimited time")%>
+</div>
+<div class="field">
+	<%= f.label :quantity %>
+	<br>
+	<%= f.number_field :quantity %>
+	&nbsp;
+	<%= check_box_tag(:unlimited_quantity) %>
+	<%= label_tag(:unlimited_quantity, "Unlimited quantitiy")%>
+</div>
+<div class="field">
+	<%= f.label :price %>
+	<br>
+	<%= f.number_field :price, :class => 'text_field', :step => 0.1 %>
+</div>
+<div class="actions">
+	<%= f.submit %>
+</div>
 <% end %>
