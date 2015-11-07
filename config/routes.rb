@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'promotions#index', as: 'promotions_list'
+  
+  get 'promotions/:id/reserve' => 'promotions#reserve', as: 'reserve_promotion'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

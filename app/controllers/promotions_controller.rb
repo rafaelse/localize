@@ -1,7 +1,8 @@
 class PromotionsController < ApplicationController
-  before_action :set_promotion, only: [:show, :edit, :update, :destroy]
+  before_action :set_promotion, only: [:show, :edit, :update, :destroy, :reserve]
 #  before_action :check_unlimited, only: [:create, :update]
   before_filter :create_categories_structure, :except => [:index, :show]
+ 
   # GET /promotions
   # GET /promotions.json
   def index
@@ -61,6 +62,19 @@ class PromotionsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to promotions_url, notice: 'Promotion was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+  
+  def reserve
+    @promotion.quantity = @promotion.quantity - 1
+    respond_to do |format|
+      if @promotion.save
+        format.html {redirect_to @promotion, notice: 'Promotion reserved successfully.'}
+        format.json {render json: {status: :ok, message: 'Promotion reserved successfully.'}}
+      else
+        format.html {render :show}
+        format.json {render json: {errors: @promotion.errors, status: :fail}.to_json}
+      end
     end
   end
 

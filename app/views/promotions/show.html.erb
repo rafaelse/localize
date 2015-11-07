@@ -1,3 +1,17 @@
+<% if @promotion.errors.any? %>
+<div id="error_explanation">
+	<h2><%= pluralize(@promotion.errors.count, "error") %> prohibited this promotion from being saved:</h2>
+
+	<ul>
+		<% @promotion.errors.full_messages.each do |message| %>
+		<li>
+			<%= message %>
+		</li>
+		<% end %>
+	</ul>
+</div>
+<% end %>
+
 <p id="notice">
 	<%= notice %>
 </p>
@@ -51,4 +65,5 @@
 </p>
 
 <%= link_to 'Edit', edit_promotion_path(@promotion) %> |
-<%= link_to 'Back', promotions_path %>
+<%= link_to 'Reserve', reserve_promotion_path(@promotion) %> |
+<%= link_to 'Back', promotions_path %> 
