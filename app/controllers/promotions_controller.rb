@@ -28,6 +28,8 @@ class PromotionsController < ApplicationController
   def create
     @promotion = Promotion.new(promotion_params)
     check_unlimited
+    @promotion.advertiser = @current_user
+    
     respond_to do |format|
       if @promotion.save
         format.html { redirect_to @promotion, notice: 'Promotion was successfully created.' }
@@ -66,9 +68,9 @@ class PromotionsController < ApplicationController
   end
   
   def reserve
-    @promotion.quantity = @promotion.quantity - 1
+    #@promotion.quantity = @promotion.quantity - 1
     respond_to do |format|
-      if @promotion.save
+      if @promotion.reserve!
         format.html {redirect_to @promotion, notice: 'Promotion reserved successfully.'}
         format.json {render json: {status: :ok, message: 'Promotion reserved successfully.'}}
       else

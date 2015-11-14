@@ -43,16 +43,16 @@
 	<br>
 	<%= f.date_select :valid_to %>
 	&nbsp;
-	<%= check_box_tag(:unlimited_time)%>
-	<%= label_tag(:unlimited_time, "Unlimited time")%>
+	<%= check_box_tag(:unlimited_time,'' , @promotion.unlimited_time?)%>
+	<%= label_tag :unlimited_time, "Unlimited time"%>
 </div>
 <div class="field">
 	<%= f.label :quantity %>
 	<br>
 	<%= f.number_field :quantity %>
 	&nbsp;
-	<%= check_box_tag(:unlimited_quantity) %>
-	<%= label_tag(:unlimited_quantity, "Unlimited quantitiy")%>
+	<%= check_box_tag :unlimited_quantity, '', @promotion.unlimited_quantity?%>
+	<%= label_tag :unlimited_quantity, "Unlimited quantitiy"%>
 </div>
 <div class="field">
 	<%= f.label :price %>
