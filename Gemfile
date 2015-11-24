@@ -26,6 +26,10 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Paperclip to upload images
 gem "paperclip", "~> 4.3"
 
+gem 'devise'
+
+gem 'simple_token_authentication'
+
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 

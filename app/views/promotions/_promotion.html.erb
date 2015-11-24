@@ -1,0 +1,11 @@
+<div class="promotion">
+  <%=image_tag promotion.banner.url(:thumb)%>
+	<h3 class="title"><%=promotion.title%> <br>
+    <span class="category"><%="(#{promotion.category.name})"%></span>
+  </h3>
+	<div class="baseline">
+    <%=display_quantity(promotion)%>
+    <%=display_time(promotion)%>
+		<span class="price"><%=number_to_currency(promotion.price)%></span>
+	</div>
+</div>

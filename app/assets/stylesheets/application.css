@@ -13,3 +13,103 @@
  *= require_tree .
  *= require_self
  */
+
+body {
+    color: navy;
+    margin: 0;
+    font-family: "Helvetica Neue", "Arial", sans-serif;
+    font-weight: 600;
+}
+
+#application_title, #application_title:hover{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    text-decoration: none;
+    color: inherit;
+    background-color: inherit;
+    font-size: 5em;
+}
+
+#top {
+    position: relative;
+    height: 15vh;
+    background: goldenrod;
+}
+
+#top #application_title{
+    position: absolute;
+    bottom: 0em;
+    line-height: 1em;
+}
+
+#top #user_section {
+    position: absolute;
+    right: 20px;
+    bottom: 10px;
+}
+
+#side {
+    display: block;
+    min-width: 10vw;
+    float: left;
+    background: goldenrod;
+    margin-top: 5px;
+    margin-right: 5px;
+}
+
+#main {
+    overflow: hidden;
+    color: navy;
+}
+
+#content {
+    background-color: #F7F7F7;
+    width: 90%;
+    margin: auto;
+}
+
+.category {
+    text-align: center;
+}
+
+.smallbox {
+    width: 30%;
+    margin: auto;
+}
+
+.in-line-field {
+    margin-right: 10px;
+    display: inline-block;
+    float: left;
+}
+
+.clearfix:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+}
+.clearfix { display: inline-block; }
+/* start commented backslash hack \*/
+* html .clearfix { height: 1%; }
+.clearfix { display: block; }
+/* close commented backslash hack */
+
+input[type="submit"] {
+    display: inline-block;
+    padding: 10px;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: navy;
+    margin: 0px;
+    border: none;
+    background-color: goldenrod;
+}
+
+input[type="submit"]:hover {
+    color: white;
+    cursor: pointer;
+}

@@ -1,8 +1,8 @@
 class Promotion < ActiveRecord::Base
   belongs_to :category
-  belongs_to :advertiser, foreign_key: 'user_id'
+  belongs_to :advertiser
   
-  has_attached_file :banner, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/:style/missing.png"
+  has_attached_file :banner, styles: {medium: "400x400>", thumb: "250x200>" }, default_url: "/images/:style/missing.png"
   validates_attachment_content_type :banner, content_type: /\Aimage\/.*\Z/
   validates :title, :description, :valid_from, :quantity, :price, presence: true
   validates :quantity, numericality: {only_integer: true, greater_than_or_equal_to: -1, message: 'Quantity must be a positive number or be unlimited'}
