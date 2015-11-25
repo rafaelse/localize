@@ -3,6 +3,7 @@ class PromotionsController < ApplicationController
 #  before_action :check_unlimited, only: [:create, :update]
   before_filter :create_categories_structure, :except => [:index, :show]
   before_filter :authenticate_advertiser!, except: [:index, :show]
+  before_filter :authorize_promotion_alteration!, except: [:index, :show, :new]
  
   # GET /promotions
   # GET /promotions.json
@@ -29,7 +30,7 @@ class PromotionsController < ApplicationController
   def create
     @promotion = Promotion.new(promotion_params)
     check_unlimited
-    @promotion.advertiser = @current_user
+    @promotion.advertiser = current_advertiser
     
     respond_to do |format|
       if @promotion.save

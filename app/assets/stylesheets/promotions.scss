@@ -19,6 +19,14 @@
 
     img {
       margin-top: 5px;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    a {
+      text-decoration: none;
     }
 
     .title{
