@@ -1,6 +1,7 @@
 class Promotion < ActiveRecord::Base
   belongs_to :category
   belongs_to :advertiser
+  has_many :reservations
   
   has_attached_file :banner, styles: {medium: "400x400>", thumb: "250x200>" }, default_url: "/images/:style/missing.png"
   validates_attachment_content_type :banner, content_type: /\Aimage\/.*\Z/
@@ -33,21 +34,6 @@ class Promotion < ActiveRecord::Base
   
   def expired?
     self.valid_to != nil and Date.today > self.valid_to
-  end
-  
-  def reserve!
-    #byebug
-    unless sold_out? or expired?
-      unless unlimited_quantity?
-        self.quantity = self.quantity - 1
-        self.save
-      end
-      return true
-    else
-      errors.add(:quantity, 'Promotion sold out!') if sold_out?
-      errors.add(:valid_to, 'Promotion expired!') if expired?
-      return false
-    end
   end
   
   private

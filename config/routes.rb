@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
- 
-  get 'my/promotions', to: 'advertiser#my_promotions'
 
+  resources :reservations
+  get 'my/promotions', to: 'advertiser#my_promotions'
   get 'advertiser/my/reservations'
 
   devise_for :advertisers, controllers: {registrations: 'advertisers/registrations'}
+  devise_for :customers, controllers: {sessions: 'customers/sessions'}
   resources :promotions
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

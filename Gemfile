@@ -26,8 +26,10 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Paperclip to upload images
 gem "paperclip", "~> 4.3"
 
+# Authentication framework
 gem 'devise'
 
+# Remote authentication helper
 gem 'simple_token_authentication'
 
 # Use ActiveModel has_secure_password

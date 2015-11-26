@@ -65,5 +65,5 @@
 </p>
 
 <%= link_to 'Edit', edit_promotion_path(@promotion) %> |
-<%= link_to 'Reserve', reserve_promotion_path(@promotion) %> |
+<%= button_to 'Reserve', reservations_path(promotion_id: @promotion), method: :post %> |
 <%= link_to 'Back', promotions_path %> 
