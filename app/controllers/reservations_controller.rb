@@ -1,6 +1,7 @@
 class ReservationsController < ApplicationController
   before_action :set_reservation, only: [:show, :edit, :update, :destroy]
   before_filter :authenticate_customer!
+  skip_before_filter :authenticate_user!, if: lambda {|controller| controller.request.format.json? }
   acts_as_token_authentication_handler_for Customer
 
   # GET /reservations
