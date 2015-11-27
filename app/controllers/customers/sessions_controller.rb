@@ -15,7 +15,7 @@ class Customers::SessionsController < Devise::SessionsController
 
      respond_to do |format|
        format.json { render :status => 200,
-                            :json => {:data => { :auth_token => current_customer.authentication_token }}}
+                            :json => {:auth_token => current_customer.authentication_token }}
        format.html { respond_with resource, :location => after_sign_in_path_for(resource)}
      end
    end
