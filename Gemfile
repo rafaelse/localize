@@ -35,6 +35,9 @@ gem 'simple_token_authentication'
 # Generates QR code image
 gem 'rqrcode_png'
 
+# Geolocation features
+gem 'geokit-rails'
+
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
