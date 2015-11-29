@@ -11,32 +11,28 @@
 
       <div class="field">
         <%= f.label :address %><br>
-        <%= f.text_field :address, value: @geo.street_address, size: 50 %>
+        <%= f.text_field :address, size: 50 %>
       </div>
 
       <div class="field clearfix">
       <span class="in-line-field">
         <%= f.label :city %><br>
-        <%= f.text_field :city, value: @geo.city %>
+        <%= f.text_field :city %>
       </span>
       <span class="in-line-field">
         <%= f.label :estate %><br>
-        <% if @geo.state %>
-        <%= f.text_field :estate, value: @geo.state %>
-            <% else %>
-        <%= f.text_field :estate, value: @geo.province %>
-        <% end %>
+        <%= f.text_field :estate %>
       </span>
       </div>
 
       <div class="field clearfix">
       <span class="in-line-field">
         <%= f.label :country %><br>
-        <%= f.text_field :country, value: @geo.country %>
+        <%= f.text_field :country %>
       </span>
       <span class="in-line-field">
         <%= f.label :zip_code %><br>
-        <%= f.text_field :zip_code, value: @geo.zip, size: 12 %>
+        <%= f.text_field :zip_code, size: 12 %>
       </span>
       </div>
 

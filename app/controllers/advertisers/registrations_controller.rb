@@ -6,8 +6,11 @@ class Advertisers::RegistrationsController < Devise::RegistrationsController
 
   # GET /resource/sign_up
   def new
-    @geo = Geokit::Geocoders::IpGeocoder.geocode(request.remote_ip)
-    super
+    build_resource({})
+    set_minimum_password_length
+    yield resource if block_given?
+    set_advertiser_location(resource)
+    respond_with self.resource
   end
 
   # POST /resource
@@ -49,6 +52,15 @@ class Advertisers::RegistrationsController < Devise::RegistrationsController
   # If you have extra params to permit, append them to the sanitizer.
   def configure_account_update_params
     devise_parameter_sanitizer.for(:account_update) << [:name, :address, :city, :estate, :country, :zip_code]
+  end
+  
+  def set_advertiser_location(advertiser)
+    geo = Geokit::Geocoders::MultiGeocoder.geocode(request.remote_ip)
+    advertiser.address = geo.street_address
+    advertiser.city = geo.city
+    advertiser.estate = geo.state ? geo.state : geo.province
+    advertiser.country = geo.country
+    advertiser.zip_code = geo.zip
   end
 
   # The path used after sign up.
