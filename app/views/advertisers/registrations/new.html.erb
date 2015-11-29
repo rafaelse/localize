@@ -11,7 +11,7 @@
 
       <div class="field">
         <%= f.label :address %><br>
-        <%= f.text_field :address, value: @geo.street_number, size: 50 %>
+        <%= f.text_field :address, value: @geo.street_address, size: 50 %>
       </div>
 
       <div class="field clearfix">
@@ -21,14 +21,18 @@
       </span>
       <span class="in-line-field">
         <%= f.label :estate %><br>
-        <%= f.text_field :estate, value: @geo.state_name %>
+        <% if @geo.state %>
+        <%= f.text_field :estate, value: @geo.state %>
+            <% else %>
+        <%= f.text_field :estate, value: @geo.province %>
+        <% end %>
       </span>
       </div>
 
       <div class="field clearfix">
       <span class="in-line-field">
         <%= f.label :country %><br>
-        <%= f.text_field :country , value: @geo.country %>
+        <%= f.text_field :country, value: @geo.country %>
       </span>
       <span class="in-line-field">
         <%= f.label :zip_code %><br>
