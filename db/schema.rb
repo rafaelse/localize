@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151126215744) do
+ActiveRecord::Schema.define(version: 20151129101109) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
 
   create_table "advertisers", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -88,7 +89,7 @@ ActiveRecord::Schema.define(version: 20151126215744) do
   add_index "promotions", ["advertiser_id"], name: "index_promotions_on_advertiser_id", using: :btree
   add_index "promotions", ["category_id"], name: "index_promotions_on_category_id", using: :btree
 
-  create_table "reservations", force: :cascade do |t|
+  create_table "reservations", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.integer  "customer_id"
     t.integer  "promotion_id"
     t.datetime "created_at",   null: false

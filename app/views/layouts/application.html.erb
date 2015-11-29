@@ -10,21 +10,14 @@
 
 <div id="top">
   <%= link_to 'Localize', promotions_path, id: 'application_title' %>
-  <div id="user_section">
-    <% if current_advertiser %>
-        <span>Welcome, <%= link_to current_advertiser.name, edit_advertiser_registration_path %></span>
-        <%= link_to 'Logout', destroy_advertiser_session_path, method: :delete %>
-    <% else %>
-        <%= link_to 'Login', new_advertiser_session_path %> <br>
-        <span>New advertiser?, <%= link_to 'Sign up here', new_advertiser_registration_path %></span>
-    <% end %>
-  </div>
+  <%= render 'layouts/user_section' %>
 </div>
 
 <div id="side">
   <ul>
     <li><%= link_to "Home", root_path %></li>
     <%= render 'advertiser/links' %>
+    <%= render 'customer/links' %>
   </ul>
 </div>
 <div id="main">

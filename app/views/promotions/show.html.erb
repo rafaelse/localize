@@ -1,67 +1,72 @@
 <% if @promotion.errors.any? %>
-<div id="error_explanation">
-	<h2><%= pluralize(@promotion.errors.count, "error") %> prohibited this promotion from being saved:</h2>
-
-	<ul>
-		<% @promotion.errors.full_messages.each do |message| %>
-		<li>
-			<%= message %>
-		</li>
-		<% end %>
-	</ul>
-</div>
+    <div id="error_explanation">
+      <h2><%= pluralize(@promotion.errors.count, "error") %> prohibited this promotion from being saved:</h2>
+      <ul>
+        <% @promotion.errors.full_messages.each do |message| %>
+            <li>
+              <%= message %>
+            </li>
+        <% end %>
+      </ul>
+    </div>
+<% elsif flash[:errors] %>
+    <div id="error_explanation">
+      <ul>
+        <% flash[:errors].each do |message| %>
+            <li>
+              <%= message %>
+            </li>
+        <% end %>
+      </ul>
+    </div>
 <% end %>
 
-<p id="notice">
-	<%= notice %>
+<p>
+  <strong>Title:</strong>
+  <%= @promotion.title %>
 </p>
 
 <p>
-	<strong>Title:</strong>
-	<%= @promotion.title %>
+  <strong>Description:</strong>
+  <%= @promotion.description %>
 </p>
 
 <p>
-	<strong>Description:</strong>
-	<%= @promotion.description %>
+  <strong>Category:</strong>
+  <%= @promotion.category.name unless @promotion.category.nil? %>
 </p>
 
 <p>
-	<strong>Category:</strong>
-	<%= @promotion.category.name unless @promotion.category.nil?  %>
+  <strong>Banner</strong>
+  <%= image_tag @promotion.banner.url(:medium) %>
 </p>
 
 <p>
-	<strong>Banner</strong>
-	<%= image_tag @promotion.banner.url(:medium) %>
+  <strong>Valid from:</strong>
+  <%= @promotion.valid_from.strftime("%b/%d/%Y") %>
 </p>
 
 <p>
-	<strong>Valid from:</strong>
-	<%= @promotion.valid_from.strftime("%b/%d/%Y") %>
+  <strong>Valid to:</strong>
+  <% if @promotion.valid_to %>
+      <%= @promotion.valid_to.strftime("%b/%d/%Y") %>
+  <% else %>
+      <%= "Unlimited Time" %>
+  <% end %>
 </p>
 
 <p>
-	<strong>Valid to:</strong>
-	<% if @promotion.valid_to %>
-	<%= @promotion.valid_to.strftime("%b/%d/%Y")%>
-	<% else %>
-	<%= "Unlimited Time"%>
-	<% end %>
+  <strong>Quantity:</strong>
+  <% if @promotion.quantity > -1 %>
+      <%= @promotion.quantity %>
+  <% else %>
+      <%= "Unlimited Quantity" %>
+  <% end %>
 </p>
 
 <p>
-	<strong>Quantity:</strong>
-	<% if @promotion.quantity > -1 %>
-	<%= @promotion.quantity %>
-	<% else %>
-	<%= "Unlimited Quantity"%>
-	<% end %>
-</p>
-
-<p>
-	<strong>Price:</strong>
-	<%= number_to_currency(@promotion.price) %>
+  <strong>Price:</strong>
+  <%= number_to_currency(@promotion.price) %>
 </p>
 
 <%= link_to 'Edit', edit_promotion_path(@promotion) %> |

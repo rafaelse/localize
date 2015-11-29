@@ -7,7 +7,7 @@ class ReservationsController < ApplicationController
   # GET /reservations
   # GET /reservations.json
   def index
-    @reservations = Reservation.all
+    @reservations = current_customer.reservations
   end
 
   # GET /reservations/1
@@ -33,10 +33,11 @@ class ReservationsController < ApplicationController
 
     respond_to do |format|
       if @reservation.make_reservation!
-        format.html {redirect_to @reservation.promotion, notice: 'Promotion reserved successfully.'}
+        @reservations = current_customer.reservations
+        format.html {render :index, notice: 'Promotion reserved successfully.'}
         format.json {render json: {status: :ok, message: 'Promotion reserved successfully.'}}
       else
-        format.html {redirect_to root_url}
+        format.html {redirect_to @reservation.promotion, flash: {errors: @reservation.errors.full_messages}}
         format.json {render json: {errors: @reservation.errors, status: :fail}.to_json}
       end
     end
@@ -59,7 +60,7 @@ class ReservationsController < ApplicationController
   # DELETE /reservations/1
   # DELETE /reservations/1.json
   def destroy
-    @reservation.destroy
+    @reservation.cancel!
     respond_to do |format|
       format.html { redirect_to reservations_url, notice: 'Reservation was successfully destroyed.' }
       format.json { head :no_content }

@@ -1,3 +1,5 @@
+require 'rqrcode_png'
+
 class Reservation < ActiveRecord::Base
   belongs_to :customer
   belongs_to :promotion
@@ -6,8 +8,12 @@ class Reservation < ActiveRecord::Base
     #byebug
     unless promotion.sold_out? or promotion.expired? or not customer or second_reservation?
       unless promotion.unlimited_quantity?
-        promotion.quantity = promotion.quantity - 1
-        self.save
+        self.transaction do
+          unless promotion.update_attribute(:quantity, promotion.quantity - 1)
+            raise ActiveRecord::Rollback
+          end
+          self.save!
+        end
       end
       return true
     else
@@ -17,6 +23,24 @@ class Reservation < ActiveRecord::Base
       errors.add(:valid_to, 'Promotion expired!') if promotion.expired?
       return false
     end
+  end
+
+  def cancel!
+
+    unless promotion.unlimited_quantity?
+      promotion.quantity = promotion.quantity + 1
+    end
+
+    self.transaction do
+      unless promotion.update_attribute(:quantity, promotion.quantity)
+        raise ActiveRecord::Rollback
+      end
+      self.destroy
+    end
+  end
+
+  def qr_code
+    RQRCode::QRCode.new(self.id)
   end
 
   private
