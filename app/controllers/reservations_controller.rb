@@ -1,7 +1,6 @@
 class ReservationsController < ApplicationController
   before_action :set_reservation, only: [:show, :edit, :update, :destroy]
-  before_filter :authenticate_customer!
-  skip_before_filter :authenticate_user!, if: lambda {|controller| controller.request.format.json? }
+  before_filter :authenticate_customer!, unless: :json_request?
   acts_as_token_authentication_handler_for Customer
 
   # GET /reservations
@@ -77,4 +76,8 @@ class ReservationsController < ApplicationController
     def reservation_params
       params.require(:reservation).permit(:promotion_id)
     end
+
+  def json_request?
+    request.format.json?
+  end
 end

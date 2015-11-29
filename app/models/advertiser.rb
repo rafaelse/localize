@@ -13,6 +13,7 @@ class Advertiser < ActiveRecord::Base
   end
 
   private
+
   def geocode_address
     geo=Geokit::Geocoders::MultiGeocoder.geocode (address)
     errors.add(:address, "Could not Geocode address") if !geo.success
