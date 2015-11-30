@@ -71,4 +71,8 @@
 
 <%= link_to 'Edit', edit_promotion_path(@promotion) %> |
 <%= button_to 'Reserve', reservations_path(promotion_id: @promotion), method: :post %> |
-<%= link_to 'Back', promotions_path %> 
+<%= link_to 'Back', promotions_path %>
+
+<div class="reviews">
+  <%= render 'reviews/reviews' %>
+</div>

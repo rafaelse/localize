@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
 
-  resources :reservations
+  # get 'reservation/:id/reviews', to: 'review#list', as: 'reviews'
+
+  resources :reservations do
+    resources :reviews
+  end
   get 'my/promotions', to: 'advertiser#my_promotions'
   get 'advertiser/my/reservations'
 

@@ -7,4 +7,5 @@ class AdvertiserController < ApplicationController
 
   def my_reservations
   end
+
 end

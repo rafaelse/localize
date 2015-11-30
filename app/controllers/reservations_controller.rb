@@ -34,7 +34,7 @@ class ReservationsController < ApplicationController
     respond_to do |format|
       if @reservation.make_reservation!
         @reservations = current_customer.reservations
-        format.html {render :index, notice: 'Promotion reserved successfully.'}
+        format.html {redirect_to reservations_url, notice: 'Promotion reserved successfully.'}
         format.json {render json: {status: :ok, message: 'Promotion reserved successfully.'}}
       else
         format.html {redirect_to @reservation.promotion, flash: {errors: @reservation.errors.full_messages}}

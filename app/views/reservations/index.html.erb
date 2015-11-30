@@ -5,7 +5,7 @@
       <div class="reservation">
         <div class="reservation_code">
           <%= image_tag reservation.qr_code.to_img.resize(100, 100).to_data_url %> <br>
-          <span> <%= reservation.id %> </span>
+          <span> <%= reservation.code %> </span>
         </div>
         <div class="reservation_info">
           <ul>

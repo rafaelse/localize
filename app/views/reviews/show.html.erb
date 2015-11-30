@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Reservation:</strong>
+  <%= @review.reservation %>
+</p>
+
+<p>
+  <strong>Text:</strong>
+  <%= @review.text %>
+</p>
+
+<p>
+  <strong>Rating:</strong>
+  <%= @review.rating %>
+</p>
+
+<%= link_to 'Edit', edit_reservation_review_path(@reservation, @review) %> |
+<%= link_to 'Back', reservation_reviews_path %>

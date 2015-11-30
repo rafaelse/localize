@@ -3,6 +3,7 @@ require 'rqrcode_png'
 class Reservation < ActiveRecord::Base
   belongs_to :customer
   belongs_to :promotion
+  has_one :review
 
   def make_reservation!
     #byebug
@@ -40,7 +41,7 @@ class Reservation < ActiveRecord::Base
   end
 
   def qr_code
-    RQRCode::QRCode.new(self.id)
+    RQRCode::QRCode.new(self.code)
   end
 
   private

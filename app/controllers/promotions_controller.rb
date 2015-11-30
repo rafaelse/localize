@@ -4,6 +4,7 @@ class PromotionsController < ApplicationController
   before_filter :create_categories_structure, :except => [:index, :show]
   before_filter :authenticate_advertiser!, except: [:index, :show]
   before_filter :authorize_promotion_alteration!, only: [:edit, :destroy]
+  before_filter :load_reviews, only: [:show]
  
   # GET /promotions
   # GET /promotions.json
@@ -102,5 +103,9 @@ class PromotionsController < ApplicationController
       result += categories_tree(category.subcategories.order(:name)) unless category.subcategories.blank?
     end
     result
+  end
+
+  def load_reviews
+    @reviews = @promotion.reservations.map {|reservation| reservation.review}
   end
 end
