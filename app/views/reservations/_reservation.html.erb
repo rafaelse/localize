@@ -1,0 +1,36 @@
+<div class="reservation">
+  <div class="reservation_code">
+    <%= image_tag reservation.qr_code.to_img.resize(100, 100).to_data_url %> <br>
+    <span> <%= reservation.code %> </span>
+  </div>
+  <div class="reservation_info">
+    <ul>
+      <% if customer_signed_in? %>
+          <li><%= link_to reservation.promotion.title, promotion_path(reservation.promotion) %></li>
+          <li>Valid <%= display_time(reservation.promotion) %></li>
+          <li><%= "Redeem from #{reservation.promotion.advertiser.name}" %></li>
+          <li><%= "At #{reservation.promotion.advertiser.full_address}" %></li>
+      <% elsif advertiser_signed_in? %>
+          <li>Customer: <%= reservation.customer.name %></li>
+          <li>Date of Reservation: <%= reservation.created_at.strftime("%b/%d/%Y") %></li>
+          <li>Valid <%= display_time(reservation.promotion) %></li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="actions">
+    <% if customer_signed_in? %>
+        <% unless reservation.promotion.expired? %>
+            <% if reservation.redeemed? %>
+                <%= link_to "Review", new_reservation_review_path(reservation), class: 'button' %>
+            <% else %>
+                <%= button_to "Cancel", reservation_path(reservation), data: {confirm: "Are you sure?"}, method: :delete %>
+            <% end %>
+        <% end %>
+    <% elsif advertiser_signed_in? %>
+        <% unless reservation.promotion.expired? %>
+            <%= button_to "Redeem", redeem_reservation_path(id: reservation.id), data: {confirm: "Are you sure?"}, method: :post %>
+        <% end %>
+    <% end %>
+
+  </div>
+</div>

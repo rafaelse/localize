@@ -35,11 +35,11 @@ class ReservationsController < ApplicationController
     respond_to do |format|
       if @reservation.make_reservation!
         @reservations = current_customer.reservations
-        format.html {redirect_to reservations_url, notice: 'Promotion reserved successfully.'}
-        format.json {render json: {status: :ok, message: 'Promotion reserved successfully.'}}
+        format.html { redirect_to reservations_url, notice: 'Promotion reserved successfully.' }
+        format.json { render json: {status: :ok, message: 'Promotion reserved successfully.'} }
       else
-        format.html {redirect_to @reservation.promotion, flash: {errors: @reservation.errors.full_messages}}
-        format.json {render json: {errors: @reservation.errors, status: :fail}.to_json}
+        format.html { redirect_to @reservation.promotion, flash: {errors: @reservation.errors.full_messages} }
+        format.json { render json: {errors: @reservation.errors, status: :fail}.to_json }
       end
     end
   end
@@ -66,8 +66,8 @@ class ReservationsController < ApplicationController
         format.html { redirect_to reservations_url, notice: 'Reservation was successfully destroyed.' }
         format.json { head :no_content }
       else
-        format.html {redirect_to reservations_url}
-        format.json {render json: {errors: @reservation.errors, status: :fail}.to_json}
+        format.html { redirect_to reservations_url }
+        format.json { render json: {errors: @reservation.errors, status: :fail}.to_json }
       end
     end
   end
@@ -75,25 +75,25 @@ class ReservationsController < ApplicationController
   def redeem
     respond_to do |format|
       if @reservation.redeem!
-        format.html {redirect_to my_reservations_url, notice: 'Reservation was redeemed successfully'}
-        format.json {render json: {status: 'ok', message: 'Reservation was redeemed successfully'}}
+        format.html { redirect_to my_reservations_url, notice: 'Reservation was redeemed successfully' }
+        format.json { render json: {status: 'ok', message: 'Reservation was redeemed successfully'} }
       else
-        format.html {redirect_to my_reservations_url, flash: {errors: @reservation.errors.full_messages}}
-        format.json {render json: {status: 'fail', errors: @reservation.errors}}
+        format.html { redirect_to my_reservations_url, flash: {errors: @reservation.errors.full_messages} }
+        format.json { render json: {status: 'fail', errors: @reservation.errors} }
       end
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_reservation
-      @reservation = Reservation.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_reservation
+    @reservation = Reservation.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def reservation_params
-      params.require(:reservation).permit(:promotion_id)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def reservation_params
+    params.require(:reservation).permit(:promotion_id)
+  end
 
   def json_request?
     request.format.json?

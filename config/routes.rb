@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   post 'reservations/:id/redeem', to: 'reservations#redeem', as: 'redeem_reservation'
 
   devise_for :advertisers, controllers: {registrations: 'advertisers/registrations'}
-  devise_for :customers, controllers: {sessions: 'customers/sessions'}
+  devise_for :customers, controllers: {sessions: 'customers/sessions', registrations: 'customers/registrations'}
   resources :promotions
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

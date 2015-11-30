@@ -98,7 +98,7 @@ body {
 .clearfix { display: block; }
 /* close commented backslash hack */
 
-input[type="submit"] {
+input[type="submit"], .button {
     display: inline-block;
     padding: 10px;
     font-size: 1.5em;
@@ -107,9 +107,10 @@ input[type="submit"] {
     margin: 0px;
     border: none;
     background-color: goldenrod;
+    text-decoration: none;
 }
 
-input[type="submit"]:hover {
+input[type="submit"]:hover, .button:hover {
     color: white;
     cursor: pointer;
 }

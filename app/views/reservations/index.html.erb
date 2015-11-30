@@ -1,25 +1,5 @@
 <h1>Listing Reservations</h1>
 
 <div id="reservations">
-  <% @reservations.each do |reservation| %>
-      <div class="reservation">
-        <div class="reservation_code">
-          <%= image_tag reservation.qr_code.to_img.resize(100, 100).to_data_url %> <br>
-          <span> <%= reservation.code %> </span>
-        </div>
-        <div class="reservation_info">
-          <ul>
-            <li><%= link_to reservation.promotion.title, promotion_path(reservation.promotion) %></li>
-            <li>Valid <%= display_time(reservation.promotion) %></li>
-            <li><%= "Redeem from #{reservation.promotion.advertiser.name}" %></li>
-            <li><%= "At #{reservation.promotion.advertiser.full_address}" %></li>
-          </ul>
-        </div>
-        <div class="actions">
-          <% unless reservation.promotion.expired? or reservation.redeemed? %>
-              <%= button_to "Cancel", reservation_path(reservation), data: { confirm: "Are you sure?" }, method: :delete %>
-          <% end %>
-        </div>
-      </div>
-  <% end %>
+  <%= render @reservations %>
 </div>
