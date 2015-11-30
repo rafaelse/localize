@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>Localize</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
@@ -22,8 +22,23 @@
 </div>
 <div id="main">
   <div id="content">
-    <% if notice %><div class="notice"><%= notice %></div><% end %>
-    <% if alert %> <div class="alert"><%= alert %></div><% end %>
+    <% if notice %>
+        <div class="notice"><%= notice %></div>
+    <% end %>
+    <% if alert %>
+        <div class="alert"><%= alert %></div>
+    <% end %>
+    <% if flash[:errors] %>
+        <div id="error_explanation">
+          <ul>
+            <% flash[:errors].each do |message| %>
+                <li>
+                  <%= message %>
+                </li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
     <%= yield %>
   </div>
 </div>

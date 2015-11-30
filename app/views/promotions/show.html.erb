@@ -9,70 +9,46 @@
         <% end %>
       </ul>
     </div>
-<% elsif flash[:errors] %>
-    <div id="error_explanation">
-      <ul>
-        <% flash[:errors].each do |message| %>
-            <li>
-              <%= message %>
-            </li>
-        <% end %>
-      </ul>
-    </div>
 <% end %>
 
-<p>
-  <strong>Title:</strong>
-  <%= @promotion.title %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @promotion.description %>
-</p>
-
-<p>
-  <strong>Category:</strong>
-  <%= @promotion.category.name unless @promotion.category.nil? %>
-</p>
-
-<p>
-  <strong>Banner</strong>
+<div id="promotion_show">
+  <h2><%= "#{@promotion.title} (#{@promotion.category.name})" %></h2>
   <%= image_tag @promotion.banner.url(:medium) %>
-</p>
 
-<p>
-  <strong>Valid from:</strong>
-  <%= @promotion.valid_from.strftime("%b/%d/%Y") %>
-</p>
+  <div id="promotion_info">
+    <span id="valid_from"><strong>Valid from:</strong> <%= @promotion.valid_from.strftime("%b/%d/%Y") %></span>
+    <span id="valid_to">
+      <strong>Valid to:</strong>
+      <% if @promotion.valid_to %>
+        <%= @promotion.valid_to.strftime("%b/%d/%Y") %>
+    <% else %>
+        <%= "Unlimited Time" %>
+    <% end %>
+    </span>
+    <span id="quantity">
+      <strong>Quantity:</strong>
+      <% if @promotion.quantity > -1 %>
+        <%= @promotion.quantity %>
+    <% else %>
+        <%= "Unlimited Quantity" %>
+    <% end %>
+    </span>
+    <span id="price">
+      <strong>Price:</strong>
+      <%= number_to_currency(@promotion.price) %>
+    </span>
+  </div>
 
-<p>
-  <strong>Valid to:</strong>
-  <% if @promotion.valid_to %>
-      <%= @promotion.valid_to.strftime("%b/%d/%Y") %>
-  <% else %>
-      <%= "Unlimited Time" %>
+  <%= button_to 'Reserve', reservations_path(promotion_id: @promotion), method: :post %>
+  <% if advertiser_signed_in? and @promotion.advertiser == current_advertiser %>
+      <%= link_to 'Edit', edit_promotion_path(@promotion) %> | <%= link_to 'Back', promotions_path %>
   <% end %>
-</p>
 
-<p>
-  <strong>Quantity:</strong>
-  <% if @promotion.quantity > -1 %>
-      <%= @promotion.quantity %>
-  <% else %>
-      <%= "Unlimited Quantity" %>
-  <% end %>
-</p>
-
-<p>
-  <strong>Price:</strong>
-  <%= number_to_currency(@promotion.price) %>
-</p>
-
-<%= button_to 'Reserve', reservations_path(promotion_id: @promotion), method: :post %>
-<% if advertiser_signed_in? and @promotion.advertiser == current_advertiser %>
-  <%= link_to 'Edit', edit_promotion_path(@promotion) %> | <%= link_to 'Back', promotions_path %>
-<% end %>
+  <h2>Description</h2>
+  <div id="description">
+    <%= @promotion.description %>
+  </div>
+</div>
 
 
 <div class="reviews">

@@ -54,7 +54,46 @@
         margin-right: 5%;
         float: right;
       }
+    }
+  }
+}
 
+#promotion_show {
+  text-align: center;
+
+  #promotion_info {
+    background-color: white;
+    width: 40%;
+    margin: 10px auto;
+    position: relative;
+    height: 7vh;
+
+    & > span {
+      position: absolute;
+    }
+
+    #valid_from {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    #valid_to {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+
+    #quantity {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+
+    #price {
+      position: absolute;
+      bottom: 0;
+      right: 0;
     }
   }
 }
