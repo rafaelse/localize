@@ -97,3 +97,22 @@
     }
   }
 }
+
+#reviews {
+  width: 50%;
+  margin: 10px auto;
+
+  .review {
+    margin: 5px 0px;
+    background-color: darkgray;
+
+    .header{
+      background-color: white;
+
+      .rating {
+        display: inline-block;
+        float:right;
+      }
+    }
+  }
+}
