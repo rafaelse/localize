@@ -28,20 +28,40 @@ class Reservation < ActiveRecord::Base
 
   def cancel!
 
-    unless promotion.unlimited_quantity?
+    unless promotion.unlimited_quantity? or self.redeemed?
       promotion.quantity = promotion.quantity + 1
-    end
-
-    self.transaction do
-      unless promotion.update_attribute(:quantity, promotion.quantity)
-        raise ActiveRecord::Rollback
+      self.transaction do
+        unless promotion.update_attribute(:quantity, promotion.quantity)
+          raise ActiveRecord::Rollback
+        end
+        self.destroy
       end
-      self.destroy
+      return true
+    else
+      errors.add(:reservation, 'already redeemed!') if self.redeemed?
+      return false
     end
   end
 
+
   def qr_code
     RQRCode::QRCode.new(self.code)
+  end
+
+  def redeemed?
+    self.redeemed
+  end
+
+  def redeem!
+    unless promotion.expired? and promotion.advertiser != current_advertiser and self.redeemed?
+      self.update_attribute(:redeemed, true)
+      return true
+    else
+      errors.add(:promotion, 'expired!') if promotion.expired?
+      errors.add(:advertiser, 'does not own promotion!') if promotion.advertiser != current_advertiser
+      errors.add(:reservation, 'already redeemed') if self.redeemed?
+      return false
+    end
   end
 
   private

@@ -69,9 +69,11 @@
   <%= number_to_currency(@promotion.price) %>
 </p>
 
-<%= link_to 'Edit', edit_promotion_path(@promotion) %> |
-<%= button_to 'Reserve', reservations_path(promotion_id: @promotion), method: :post %> |
-<%= link_to 'Back', promotions_path %>
+<%= button_to 'Reserve', reservations_path(promotion_id: @promotion), method: :post %>
+<% if advertiser_signed_in? and @promotion.advertiser == current_advertiser %>
+  <%= link_to 'Edit', edit_promotion_path(@promotion) %> | <%= link_to 'Back', promotions_path %>
+<% end %>
+
 
 <div class="reviews">
   <%= render 'reviews/reviews' %>

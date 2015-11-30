@@ -6,7 +6,8 @@ Rails.application.routes.draw do
     resources :reviews
   end
   get 'my/promotions', to: 'advertiser#my_promotions'
-  get 'advertiser/my/reservations'
+  get 'my/reservations', to: 'advertiser#my_reservations'
+  post 'reservations/:id/redeem', to: 'reservations#redeem', as: 'redeem_reservation'
 
   devise_for :advertisers, controllers: {registrations: 'advertisers/registrations'}
   devise_for :customers, controllers: {sessions: 'customers/sessions'}
@@ -16,8 +17,6 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'promotions#index'
-  
-  get 'promotions/:id/reserve' => 'promotions#reserve', as: 'reserve_promotion'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

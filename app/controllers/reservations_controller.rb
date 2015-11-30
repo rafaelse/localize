@@ -1,8 +1,9 @@
 class ReservationsController < ApplicationController
-  before_action :set_reservation, only: [:show, :edit, :update, :destroy]
-  before_filter :authenticate_customer!, unless: :json_request?
+  before_action :set_reservation, only: [:show, :edit, :update, :destroy, :redeem]
+  before_filter :authenticate_customer!, except: [:redeem], unless: :json_request?
+  before_filter :authenticate_advertiser!, only: [:redeem]
   skip_before_filter :verify_authenticity_token, if: :json_request?
-  acts_as_token_authentication_handler_for Customer
+  acts_as_token_authentication_handler_for Customer, except: [:redeem]
 
   # GET /reservations
   # GET /reservations.json
@@ -60,10 +61,26 @@ class ReservationsController < ApplicationController
   # DELETE /reservations/1
   # DELETE /reservations/1.json
   def destroy
-    @reservation.cancel!
     respond_to do |format|
-      format.html { redirect_to reservations_url, notice: 'Reservation was successfully destroyed.' }
-      format.json { head :no_content }
+      if @reservation.cancel!
+        format.html { redirect_to reservations_url, notice: 'Reservation was successfully destroyed.' }
+        format.json { head :no_content }
+      else
+        format.html {redirect_to reservations_url}
+        format.json {render json: {errors: @reservation.errors, status: :fail}.to_json}
+      end
+    end
+  end
+
+  def redeem
+    respond_to do |format|
+      if @reservation.redeem!
+        format.html {redirect_to my_reservations_url, notice: 'Reservation was redeemed successfully'}
+        format.json {render json: {status: 'ok', message: 'Reservation was redeemed successfully'}}
+      else
+        format.html {redirect_to my_reservations_url, flash: {errors: @reservation.errors.full_messages}}
+        format.json {render json: {status: 'fail', errors: @reservation.errors}}
+      end
     end
   end
 

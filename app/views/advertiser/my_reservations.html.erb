@@ -1,2 +1,24 @@
-<h1>Advertiser#my_reservations</h1>
-<p>Find me in app/views/advertiser/my_reservations.html.erb</p>
+<h1>Listing Reservations</h1>
+
+<div id="reservations">
+  <% @reservations.each do |reservation| %>
+      <div class="reservation">
+        <div class="reservation_code">
+          <%= image_tag reservation.qr_code.to_img.resize(100, 100).to_data_url %> <br>
+          <span> <%= reservation.code %> </span>
+        </div>
+        <div class="reservation_info">
+          <ul>
+            <li>Customer: <%= reservation.customer.name %></li>
+            <li>Date of Reservation: <%= reservation.created_at.strftime("%b/%d/%Y") %></li>
+            <li>Valid <%= display_time(reservation.promotion) %></li>
+          </ul>
+        </div>
+        <div class="actions">
+          <% unless reservation.promotion.expired? %>
+              <%= button_to "Redeem", redeem_reservation_path(id: reservation.id), data: { confirm: "Are you sure?" }, method: :post %>
+          <% end %>
+        </div>
+      </div>
+  <% end %>
+</div>

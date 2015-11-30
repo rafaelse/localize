@@ -1,4 +1,5 @@
 class PromotionsController < ApplicationController
+
   before_action :set_promotion, only: [:show, :edit, :update, :destroy, :reserve]
 #  before_action :check_unlimited, only: [:create, :update]
   before_filter :create_categories_structure, :except => [:index, :show]

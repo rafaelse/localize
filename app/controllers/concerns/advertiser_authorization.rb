@@ -1,6 +1,5 @@
-module AdvertiserAuthorization extend ActiveSupport::Concern
-
-  private
+module AdvertiserAuthorization
+  extend ActiveSupport::Concern
 
   def current_advertiser_owns?(promotion)
     promotion and advertiser_signed_in? and promotion.advertiser == current_advertiser
@@ -11,4 +10,6 @@ module AdvertiserAuthorization extend ActiveSupport::Concern
       redirect_to root_url, notice: 'You can only alter your promotions.'
     end
   end
+
+
 end

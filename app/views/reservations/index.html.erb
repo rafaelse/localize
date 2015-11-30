@@ -16,7 +16,7 @@
           </ul>
         </div>
         <div class="actions">
-          <% unless reservation.promotion.expired? %>
+          <% unless reservation.promotion.expired? or reservation.redeemed? %>
               <%= button_to "Cancel", reservation_path(reservation), data: { confirm: "Are you sure?" }, method: :delete %>
           <% end %>
         </div>
