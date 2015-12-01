@@ -5,6 +5,7 @@ class ReservationsController < ApplicationController
   skip_before_filter :verify_authenticity_token, if: :json_request?
   acts_as_token_authentication_handler_for Customer, except: [:redeem]
 
+
   # GET /reservations
   # GET /reservations.json
   def index
@@ -64,7 +65,7 @@ class ReservationsController < ApplicationController
     respond_to do |format|
       if @reservation.cancel!
         format.html { redirect_to reservations_url, notice: 'Reservation was successfully destroyed.' }
-        format.json { head :no_content }
+        format.json { render json: {status: :ok}.to_json }
       else
         format.html { redirect_to reservations_url }
         format.json { render json: {errors: @reservation.errors, status: :fail}.to_json }

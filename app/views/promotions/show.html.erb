@@ -45,6 +45,7 @@
   <% end %>
 
   <h2>Description</h2>
+
   <div id="description">
     <%= @promotion.description %>
   </div>
@@ -52,6 +53,4 @@
 
 <h2 style="text-align: center">Reviews</h2>
 
-<div id="reviews">
-  <%= render @reviews %>
-</div>
+<%= render 'reviews/reviews' %>

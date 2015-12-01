@@ -107,6 +107,6 @@ class PromotionsController < ApplicationController
   end
 
   def load_reviews
-    @reviews = @promotion.reservations.map {|reservation| reservation.review}
+    @reviews = Review.joins(reservation: :promotion).where('promotion_id = ?', @promotion.id)
   end
 end

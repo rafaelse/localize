@@ -16,7 +16,7 @@
   </div>
   <div class="field">
     <%= f.label :rating %><br>
-    <%= select_tag :rating, options_for_select((1..5).to_a) %>
+    <%= f.select :rating, options_for_select((1..5).to_a) %>
   </div>
   <div class="actions">
     <%= f.submit %>

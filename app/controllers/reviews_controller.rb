@@ -1,6 +1,9 @@
 class ReviewsController < ApplicationController
   before_action :set_reservation
   before_action :set_review, only: [:show, :edit, :update, :destroy]
+  before_filter :authenticate_customer!, unless: :json_request?
+  skip_before_filter :verify_authenticity_token, if: :json_request?
+  acts_as_token_authentication_handler_for Customer
 
   # GET /reviews
   # GET /reviews.json
@@ -29,7 +32,7 @@ class ReviewsController < ApplicationController
     @review = @reservation.build_review(review_params)
     respond_to do |format|
       if @review.save!
-        format.html {redirect_to reservation_review_url(@reservation, @review), notice: 'Review created successfully!'}
+        format.html {redirect_to reservations_url, notice: 'Review created successfully!'}
         format.json {render json: {status: :ok, message: 'Review created successfully!.'}}
       else
         format.html {render :new }
@@ -58,7 +61,7 @@ class ReviewsController < ApplicationController
     @review.destroy
     respond_to do |format|
       format.html { redirect_to reviews_url, notice: 'Review was successfully destroyed.' }
-      format.json { head :no_content }
+      format.json { render json: {status: :ok} }
     end
   end
 
