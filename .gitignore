@@ -18,3 +18,5 @@ public/system
 .ruby-version
 .env
 /storage
+# Ignore master key for decrypting credentials and more.
+/config/master.key
