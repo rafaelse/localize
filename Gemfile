@@ -25,18 +25,16 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Use Paperclip to upload images
 gem "paperclip", "~> 5.0"
-
 # Authentication framework
 gem 'devise'
-
 # Remote authentication helper
 gem 'simple_token_authentication'
-
 # Generates QR code image
 gem 'rqrcode_png', git: "https://github.com/DCarper/rqrcode_png.git"
-
 # Geolocation features
 gem 'geokit-rails'
+# Trix editor
+gem 'trix'
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'

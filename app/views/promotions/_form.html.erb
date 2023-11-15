@@ -21,7 +21,8 @@
 <div class="field">
 	<%= f.label :description %>
 	<br>
-	<%= f.text_area :description, rows: 15 %>
+	<%= f.hidden_field :description %>
+	<trix-editor input="promotion_description"></trix-editor>
 </div>
 <div class="field">
 	<%= f.label :category_id %>

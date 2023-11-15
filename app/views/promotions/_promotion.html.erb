@@ -1,7 +1,7 @@
 <div class="promotion">
-  <%= image_tag promotion.banner.url(:thumb) %>
   <%= link_to promotion_path(promotion) do %>
-      <h3 class="title"><%= promotion.title %> </h3>
+    <%= image_tag promotion.banner.url(:thumb) %>
+    <h3 class="title"><%= promotion.title %> </h3>
   <% end %>
   <span class="category"><%= "(#{promotion.category.name})" %></span>
   <div class="baseline">

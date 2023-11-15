@@ -20,14 +20,14 @@ pre {
 
 a {
   color: navy;
+  text-decoration: none;
 
   &:visited {
     color: navy;
   }
 
   &:hover {
-    background-color: navy;
-    color: goldenrod;
+    text-decoration: underline;
   }
 }
 

@@ -9,6 +9,13 @@
   display: flex;
   flex-wrap: wrap;
 
+  .promotion a:hover {
+
+    h3 {
+      color: goldenrod;
+    }
+  }
+
   > div {
     position: relative;
     width: 350px;
@@ -29,7 +36,7 @@
       text-decoration: none;
     }
 
-    .title{
+    .title {
       text-align: center;
       margin: 5px;
     }
@@ -95,6 +102,15 @@
       bottom: 0;
       right: 0;
     }
+  }
+
+  #description {
+    text-align: justify;
+    width: 70%;
+    margin: 10px auto;
+    border-style: solid;
+    border-width: thin;
+    padding: 10px;
   }
 }
 

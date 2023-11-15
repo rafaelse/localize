@@ -66,17 +66,17 @@ GEM
     coffee-script-source (1.12.2)
     concurrent-ruby (1.2.2)
     crass (1.0.6)
+    date (3.3.4)
     devise (4.9.3)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
-    digest (3.1.1)
     erubi (1.12.0)
     execjs (2.9.1)
     ffi (1.16.3)
-    geokit (1.13.1)
+    geokit (1.14.0)
     geokit-rails (2.5.0)
       geokit (~> 1.5)
       rails (>= 3.0)
@@ -84,7 +84,6 @@ GEM
       activesupport (>= 5.0)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
-    io-wait (0.3.0)
     jbuilder (2.11.5)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
@@ -110,23 +109,19 @@ GEM
     mimemagic (0.3.10)
       nokogiri (~> 1)
       rake
-    mini_mime (1.1.2)
-    minitest (5.15.0)
-    net-imap (0.2.2)
-      digest
+    mini_mime (1.1.5)
+    minitest (5.20.0)
+    net-imap (0.3.7)
+      date
       net-protocol
-      strscan
     net-pop (0.1.2)
       net-protocol
-    net-protocol (0.1.2)
-      io-wait
+    net-protocol (0.2.2)
       timeout
-    net-smtp (0.3.0)
-      digest
+    net-smtp (0.4.0)
       net-protocol
-      timeout
     nio4r (2.5.9)
-    nokogiri (1.12.5-x86_64-linux)
+    nokogiri (1.13.10-x86_64-linux)
       racc (~> 1.4)
     orm_adapter (0.5.0)
     paperclip (5.3.0)
@@ -201,13 +196,14 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
-    strscan (3.0.7)
     terrapin (0.6.0)
       climate_control (>= 0.0.3, < 1.0)
-    thor (1.2.2)
+    thor (1.3.0)
     thread_safe (0.3.6)
     tilt (2.3.0)
-    timeout (0.4.0)
+    timeout (0.4.1)
+    trix (0.10.1)
+      rails
     turbolinks (5.2.1)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
@@ -245,6 +241,7 @@ DEPENDENCIES
   sdoc (~> 0.4.0)
   simple_token_authentication
   spring
+  trix
   turbolinks
   uglifier (>= 1.3.0)
   web-console (~> 3.0)
