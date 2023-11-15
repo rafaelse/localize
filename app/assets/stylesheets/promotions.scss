@@ -9,9 +9,13 @@
   display: flex;
   flex-wrap: wrap;
 
+  h2 {
+    margin: 0;
+  }
+
   .promotion a:hover {
 
-    h3 {
+    .title {
       color: goldenrod;
     }
   }
@@ -38,7 +42,7 @@
 
     .title {
       text-align: center;
-      margin: 5px;
+      margin: 0;
     }
 
     .baseline {

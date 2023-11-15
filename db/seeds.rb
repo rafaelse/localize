@@ -84,6 +84,99 @@ joalheria = Category.create!(
   name: 'Joalheria e Relógios',
   parent_category: bens)
 
+roupas = Category.create!(
+  name: 'Roupas',
+  parent_category: bens)
+
 academia = Category.create!(
   name: 'Academia',
   parent_category: saude)
+
+Promotion.create(
+  title: 'Sonho de Valsa - 1kg',
+  description: 'Promoção',
+  banner: File.new(File.join(Rails.root,'app/assets/images/bombons.jpg')),
+  valid_from: Date.new(2023, 11, 15),
+  valid_to: nil,
+  quantity: 5,
+  price: 40,
+  advertiser: loja_doces,
+  category: alimentos)
+
+Promotion.create(
+  title: 'Ouro Branco - 1kg',
+  description: 'Promoção',
+  banner: File.new(File.join(Rails.root,'app/assets/images/ourobranco.jpg')),
+  valid_from: Date.today,
+  valid_to: nil,
+  quantity: 10,
+  price: 35,
+  advertiser: loja_doces,
+  category: alimentos)
+
+Promotion.create(
+  title: 'Cesta de Cholocates',
+  description: 'Promoção',
+  banner: File.new(File.join(Rails.root,'app/assets/images/cesta.jpg')),
+  valid_from: Date.today,
+  valid_to: 3.days.from_now,
+  quantity: 4,
+  price: 80,
+  advertiser: loja_doces,
+  category: alimentos)
+
+Promotion.create(
+  title: 'Cesta de Fini',
+  description: 'Promoção',
+  banner: File.new(File.join(Rails.root,'app/assets/images/cesta-fini.jpg')),
+  valid_from: Date.today,
+  valid_to: 5.days.from_now,
+  quantity: 7,
+  price: 60,
+  advertiser: loja_doces,
+  category: alimentos)
+
+Promotion.create(
+  title: 'Paçoquitas - 900g Grande',
+  description: 'Promoção',
+  banner: File.new(File.join(Rails.root,'app/assets/images/pacoquitas.png')),
+  valid_from: Date.today,
+  valid_to: nil,
+  quantity: -1,
+  price: 29.90,
+  advertiser: loja_doces,
+  category: alimentos)
+
+Promotion.create(
+  title: 'Conjunto Vermelho de Tricô',
+  description: 'Promoção',
+  banner: File.new(File.join(Rails.root,'app/assets/images/conjunto.jpg')),
+  valid_from: Date.today,
+  valid_to: nil,
+  quantity: 3,
+  price: 134.90,
+  advertiser: loja_roupas,
+  category: roupas)
+
+Promotion.create(
+  title: 'Conjunto Rosa para Academia',
+  description: 'Promoção',
+  banner: File.new(File.join(Rails.root,'app/assets/images/academia.jpg')),
+  valid_from: Date.today,
+  valid_to: Date.tomorrow,
+  quantity: 5,
+  price: 99.9,
+  advertiser: loja_roupas,
+  category: roupas)
+
+Promotion.create(
+  title: 'Pijama Feminino de Inverno Bege',
+  description: 'Promoção',
+  banner: File.new(File.join(Rails.root,'app/assets/images/image.jpg')),
+  valid_from: Date.today,
+  valid_to: nil,
+  quantity: 1,
+  price: 250,
+  advertiser: loja_roupas,
+  category: roupas)
+

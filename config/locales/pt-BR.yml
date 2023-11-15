@@ -6,9 +6,9 @@ pt-BR:
         delimiter: '.'
         separator: ','
         precision: 2
-        round_mode: default
+        #round_mode: default
         #significant: true
-        strip_insignificant_zeros: true
+        #strip_insignificant_zeros: true
         format: '%u %n'
   date:
     order:

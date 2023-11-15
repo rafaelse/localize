@@ -12,7 +12,8 @@
 <% end %>
 
 <div id="promotion_show">
-  <h2><%= "#{@promotion.title} (#{@promotion.category.name})" %></h2>
+  <h2><%= @promotion.advertiser.name %></h2>
+  <h3><%= "#{@promotion.title} (#{@promotion.category.name})" %></h3>
   <%= image_tag @promotion.banner.url(:medium) %>
 
   <div id="promotion_info">
@@ -41,12 +42,12 @@
 
   <%= button_to 'Reservar', reservations_path(promotion_id: @promotion), method: :post %>
   <% if advertiser_signed_in? and @promotion.advertiser == current_advertiser %>
-    <%= link_to 'Editar', edit_promotion_path(@promotion) %> | <%= link_to 'Voltar', promotions_path %>
+    <%= link_to 'Excluir', promotion_path(@promotion), method: :delete, data: {confirm: "Tem certeza?"} %> | <%= link_to 'Editar', edit_promotion_path(@promotion) %> | <%= link_to 'Voltar', promotions_path %>
   <% end %>
 
   <h2>Descrição</h2>
 
-  <div id="description">
+  <div id="description" class="trix-content">
     <%= sanitize(@promotion.description) %>
   </div>
 </div>

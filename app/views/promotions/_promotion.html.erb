@@ -1,4 +1,5 @@
 <div class="promotion">
+  <h2><%= promotion.advertiser.name %></h2>
   <%= link_to promotion_path(promotion) do %>
     <%= image_tag promotion.banner.url(:thumb) %>
     <h3 class="title"><%= promotion.title %> </h3>

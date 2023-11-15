@@ -7,7 +7,8 @@ class Reservation < ActiveRecord::Base
 
   def make_reservation!
     #byebug
-    if promotion.sold_out? or promotion.expired? or not customer or second_reservation?
+    if promotion.sold_out? or promotion.expired? or not customer or second_reservation? or not promotion.started?
+      errors.add('Início', 'em data futura!')
       errors.add('Reserva ', 'já realizada!') if second_reservation?
       errors.add('Consumidor', ' algum consumidor realizando a reserva!') unless customer
       errors.add('Promoção', ' esgotada!') if promotion.sold_out?
@@ -51,6 +52,7 @@ class Reservation < ActiveRecord::Base
       errors.add('Promoção ', ' expirou!') if promotion.expired?
       errors.add('Comerciante', ' não é o responsável pela promoção!') if promotion.advertiser != current_advertiser
       errors.add('Reserva', ' já resgatada!') if self.redeemed?
+      throw :abort
     else
       self.update_attribute(:redeemed, true)
     end

@@ -9,7 +9,7 @@ class PromotionsController < ApplicationController
   # GET /promotions
   # GET /promotions.json
   def index
-    @promotions = Promotion.order(created_at: :desc)
+    @promotions = Promotion.where('? >= valid_from and (? <= valid_to or valid_to is null) and quantity <> ?', Date.today, Date.today, 0).order(created_at: :desc)
   end
 
   # GET /promotions/1
@@ -68,6 +68,10 @@ class PromotionsController < ApplicationController
       format.html { redirect_to promotions_url, notice: 'Promoção excluída com sucesso!.' }
       format.json { head :no_content }
     end
+  end
+
+  rescue_from 'Promotion::Error' do |exception|
+    redirect_to promotion_url(@promotion), alert: exception.message
   end
 
   private
