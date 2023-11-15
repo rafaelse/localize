@@ -7,28 +7,26 @@ class Reservation < ActiveRecord::Base
 
   def make_reservation!
     #byebug
-    unless promotion.sold_out? or promotion.expired? or not customer or second_reservation?
-      unless promotion.unlimited_quantity?
-        self.transaction do
-          unless promotion.update_attribute(:quantity, promotion.quantity - 1)
-            raise ActiveRecord::Rollback
-          end
-          self.save!
-        end
-      end
-      return true
+    if promotion.sold_out? or promotion.expired? or not customer or second_reservation?
+      errors.add('Reserva ', 'já realizada!') if second_reservation?
+      errors.add('Consumidor', ' algum consumidor realizando a reserva!') unless customer
+      errors.add('Promoção', ' esgotada!') if promotion.sold_out?
+      errors.add('Validade', ' expirada!') if promotion.expired?
+      false
     else
-      errors.add(:reservation, 'You can only reserve a promotion once!') if second_reservation?
-      errors.add(:customer, 'Not a customer linked to the reservation!') if not customer
-      errors.add(:quantity, 'Promotion sold out!') if promotion.sold_out?
-      errors.add(:valid_to, 'Promotion expired!') if promotion.expired?
-      return false
+      self.transaction do
+        unless promotion.unlimited_quantity?
+            raise ActiveRecord::Rollback unless promotion.update_attribute(:quantity, promotion.quantity - 1)
+        end
+        self.save!
+      end
     end
   end
 
   def cancel!
-
-    unless promotion.unlimited_quantity? or self.redeemed?
+    if promotion.unlimited_quantity? or self.redeemed?
+      errors.add('Reserva', ' já resgatada!') if self.redeemed?
+    else
       promotion.quantity = promotion.quantity + 1
       self.transaction do
         unless promotion.update_attribute(:quantity, promotion.quantity)
@@ -36,10 +34,6 @@ class Reservation < ActiveRecord::Base
         end
         self.destroy
       end
-      return true
-    else
-      errors.add(:reservation, 'already redeemed!') if self.redeemed?
-      return false
     end
   end
 
@@ -53,20 +47,18 @@ class Reservation < ActiveRecord::Base
   end
 
   def redeem!
-    unless promotion.expired? and promotion.advertiser != current_advertiser and self.redeemed?
-      self.update_attribute(:redeemed, true)
-      return true
+    if promotion.expired? and promotion.advertiser != current_advertiser and self.redeemed?
+      errors.add('Promoção ', ' expirou!') if promotion.expired?
+      errors.add('Comerciante', ' não é o responsável pela promoção!') if promotion.advertiser != current_advertiser
+      errors.add('Reserva', ' já resgatada!') if self.redeemed?
     else
-      errors.add(:promotion, 'expired!') if promotion.expired?
-      errors.add(:advertiser, 'does not own promotion!') if promotion.advertiser != current_advertiser
-      errors.add(:reservation, 'already redeemed') if self.redeemed?
-      return false
+      self.update_attribute(:redeemed, true)
     end
   end
 
   private
 
   def second_reservation?
-    return Reservation.find_by(promotion_id: promotion.id, customer_id: customer.id)
+    Reservation.find_by(promotion_id: promotion.id, customer_id: customer.id)
   end
 end

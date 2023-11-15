@@ -33,7 +33,7 @@ class DeviseCreateAdvertisers < ActiveRecord::Migration
       t.string :name
       t.string :address
       t.string :city
-      t.string :estate
+      t.string :state
       t.string :country
       t.string :zip_code
       t.decimal :latitude

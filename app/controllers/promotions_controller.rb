@@ -1,16 +1,15 @@
 class PromotionsController < ApplicationController
-
   before_action :set_promotion, only: [:show, :edit, :update, :destroy, :reserve]
 #  before_action :check_unlimited, only: [:create, :update]
-  before_filter :create_categories_structure, :except => [:index, :show]
-  before_filter :authenticate_advertiser!, except: [:index, :show]
-  before_filter :authorize_promotion_alteration!, only: [:edit, :destroy]
-  before_filter :load_reviews, only: [:show]
+  before_action :create_categories_structure, :except => [:index, :show]
+  before_action :authenticate_advertiser!, except: [:index, :show]
+  before_action :authorize_promotion_alteration!, only: [:edit, :destroy]
+  before_action :load_reviews, only: [:show]
  
   # GET /promotions
   # GET /promotions.json
   def index
-    @promotions = Promotion.all
+    @promotions = Promotion.order(created_at: :desc)
   end
 
   # GET /promotions/1
@@ -36,7 +35,7 @@ class PromotionsController < ApplicationController
     
     respond_to do |format|
       if @promotion.save
-        format.html { redirect_to @promotion, notice: 'Promotion was successfully created.' }
+        format.html { redirect_to @promotion, notice: 'Promoção cadastrada com sucesso!' }
         format.json { render :show, status: :created, location: @promotion }
       else
         format.html { render :new }
@@ -52,7 +51,7 @@ class PromotionsController < ApplicationController
     check_unlimited
     respond_to do |format|
       if @promotion.save
-        format.html { redirect_to @promotion, notice: 'Promotion was successfully updated.' }
+        format.html { redirect_to @promotion, notice: 'Promoção atualizada com sucesso!' }
         format.json { render :show, status: :ok, location: @promotion }
       else
         format.html { render :edit }
@@ -66,7 +65,7 @@ class PromotionsController < ApplicationController
   def destroy
     @promotion.destroy
     respond_to do |format|
-      format.html { redirect_to promotions_url, notice: 'Promotion was successfully destroyed.' }
+      format.html { redirect_to promotions_url, notice: 'Promoção excluída com sucesso!.' }
       format.json { head :no_content }
     end
   end
@@ -107,6 +106,6 @@ class PromotionsController < ApplicationController
   end
 
   def load_reviews
-    @reviews = Review.joins(reservation: :promotion).where('promotion_id = ?', @promotion.id)
+    @reviews = @promotion.reviews
   end
 end

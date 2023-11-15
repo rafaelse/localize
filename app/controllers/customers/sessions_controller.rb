@@ -1,6 +1,6 @@
 class Customers::SessionsController < Devise::SessionsController
 # before_filter :configure_sign_in_params, only: [:create]
-  skip_before_filter :verify_authenticity_token, only: [:create]
+  skip_before_action :verify_authenticity_token, only: [:create]
 
       # GET /resource/sign_in
   # def new

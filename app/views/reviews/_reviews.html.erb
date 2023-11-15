@@ -2,8 +2,8 @@
   <% @reviews.each do |review| %>
       <div class="review clearfix">
         <div class="header">
-          <span class="author"><%= review.reservation.customer.name %>'s review </span>
-          <span class="rating">Rating => <%= review.rating %> </span>
+          <span class="author"><%= review.reservation.customer.name %></span>
+          <span class="rating">Nota => <%= review.rating %> </span>
         </div>
         <div class="body">
           <%= review.text %>

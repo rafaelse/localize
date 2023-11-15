@@ -5,12 +5,11 @@ class Category < ActiveRecord::Base
   
   def depth
     unless @depth
-      unless parent_category.nil?
-        @depth = parent_category.depth + 1
-      else
+      if parent_category.nil?
         @depth = 0
+      else
+        @depth = parent_category.depth + 1
       end
     end
-    @depth
   end
 end

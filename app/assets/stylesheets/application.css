@@ -37,9 +37,9 @@ body {
     background: goldenrod;
 }
 
-#top #application_title{
+#top #application_title {
     position: absolute;
-    bottom: 0em;
+    bottom: 0;
     line-height: 1em;
 }
 

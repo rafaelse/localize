@@ -6,8 +6,17 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+Reservation.delete_all
 Promotion.delete_all
 Category.delete_all
+Customer.delete_all
+Advertiser.delete_all
+
+advertiser = Advertiser.new
+advertiser.name = 'Comerciante'
+advertiser.email = 'rfs.rafael23@gmail.com'
+advertiser.password = 'abcd1234'
+advertiser.save!(validate: false)
 
 #Seeding Categories
 Category.create!(
@@ -95,6 +104,7 @@ Promotion.new(
   valid_to: nil,
   quantity: 5,
   price: 300,
+  advertiser: advertiser,
   category: Category.find(9)).save(validate: false)
   
 Promotion.new(
@@ -106,6 +116,7 @@ Promotion.new(
   valid_to: nil,
   quantity: 25,
   price: 200,
+  advertiser: advertiser,
   category: Category.find(5)).save(validate: false)
   
 Promotion.new(
@@ -117,6 +128,7 @@ Promotion.new(
   valid_to: Date.new(2015, 07, 31),
   quantity: 2000,
   price: 50,
+  advertiser: advertiser,
   category: Category.find(2)).save(validate: false)
   
 Promotion.new(title: 'Technology Fair',
@@ -127,6 +139,7 @@ Promotion.new(title: 'Technology Fair',
   valid_to: Date.new(2015, 9, 20),
   quantity: 2000,
   price: 30,
+              advertiser: advertiser,
   category: Category.find(2)).save(validate: false)
   
 Promotion.new(
@@ -138,6 +151,7 @@ Promotion.new(
   valid_to: nil,
   quantity: -1,
   price: 150,
+  advertiser: advertiser,
   category: Category.find(3)).save(validate: false)
   
 Promotion.new(
@@ -149,6 +163,7 @@ Promotion.new(
   valid_to: nil,
   quantity: -1,
   price: 100,
+  advertiser: advertiser,
   category: Category.find(4)).save(validate: false)
   
 Promotion.new(
@@ -160,6 +175,7 @@ Promotion.new(
   valid_to: nil,
   quantity: 30,
   price: 200,
+  advertiser: advertiser,
   category: Category.find(5)).save(validate: false)
   
 Promotion.new(
@@ -171,6 +187,7 @@ Promotion.new(
   valid_to: nil,
   quantity: 30,
   price: 300,
+  advertiser: advertiser,
   category: Category.find(5)).save(validate: false)
   
 Promotion.new(
@@ -182,6 +199,7 @@ Promotion.new(
   valid_to: nil,
   quantity: 10,
   price: 900,
+  advertiser: advertiser,
   category: Category.find(6)).save(validate: false)
 
 Promotion.new(
@@ -193,4 +211,5 @@ Promotion.new(
   valid_to: nil,
   quantity: 5,
   price: 2000,
+  advertiser: advertiser,
   category: Category.find(8)).save(validate: false)

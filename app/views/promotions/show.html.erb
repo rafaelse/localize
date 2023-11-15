@@ -1,14 +1,14 @@
 <% if @promotion.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@promotion.errors.count, "error") %> prohibited this promotion from being saved:</h2>
-      <ul>
-        <% @promotion.errors.full_messages.each do |message| %>
-            <li>
-              <%= message %>
-            </li>
-        <% end %>
-      </ul>
-    </div>
+  <div id="error_explanation">
+    <h2><%= pluralize(@promotion.errors.count, "error") %> prohibited this promotion from being saved:</h2>
+    <ul>
+      <% @promotion.errors.full_messages.each do |message| %>
+        <li>
+          <%= message %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
 <% end %>
 
 <div id="promotion_show">
@@ -16,41 +16,43 @@
   <%= image_tag @promotion.banner.url(:medium) %>
 
   <div id="promotion_info">
-    <span id="valid_from"><strong>Valid from:</strong> <%= @promotion.valid_from.strftime("%b/%d/%Y") %></span>
+    <span id="valid_from"><strong>Válida de:</strong> <%= @promotion.valid_from.strftime('%d/%m/%Y') %></span>
     <span id="valid_to">
-      <strong>Valid to:</strong>
+      <strong>Válida até:</strong>
       <% if @promotion.valid_to %>
-        <%= @promotion.valid_to.strftime("%b/%d/%Y") %>
+        <%= @promotion.valid_to.strftime('%d/%m/%Y') %>
     <% else %>
-        <%= "Unlimited Time" %>
+        <%= "Tempo ilimitado" %>
     <% end %>
     </span>
     <span id="quantity">
-      <strong>Quantity:</strong>
+      <strong>Quantidade disponível:</strong>
       <% if @promotion.quantity > -1 %>
         <%= @promotion.quantity %>
     <% else %>
-        <%= "Unlimited Quantity" %>
+        <%= "Quantidade ilimitada" %>
     <% end %>
     </span>
     <span id="price">
-      <strong>Price:</strong>
+      <strong>Preço:</strong>
       <%= number_to_currency(@promotion.price) %>
     </span>
   </div>
 
-  <%= button_to 'Reserve', reservations_path(promotion_id: @promotion), method: :post %>
+  <%= button_to 'Reservar', reservations_path(promotion_id: @promotion), method: :post %>
   <% if advertiser_signed_in? and @promotion.advertiser == current_advertiser %>
-      <%= link_to 'Edit', edit_promotion_path(@promotion) %> | <%= link_to 'Back', promotions_path %>
+    <%= link_to 'Editar', edit_promotion_path(@promotion) %> | <%= link_to 'Voltar', promotions_path %>
   <% end %>
 
-  <h2>Description</h2>
+  <h2>Descrição</h2>
 
   <div id="description">
     <%= @promotion.description %>
   </div>
 </div>
 
-<h2 style="text-align: center">Reviews</h2>
+<% unless @promotion.reviews.empty? %>
+  <h2 style="text-align: center">Avaliações</h2>
 
-<%= render 'reviews/reviews' %>
+  <%= render 'reviews/reviews' %>
+<% end %>

@@ -21,8 +21,8 @@ default: &default
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: 5
   username: localize
-  password: locSenha
-  host: localhost
+  password: <%= ENV['LOCALIZE_DATABASE_PASSWORD'] %>
+  host: 127.0.0.1
 
 development:
   <<: *default

@@ -1,14 +1,13 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Customer:</strong>
+  <strong>Cliente:</strong>
   <%= @reservation.customer %>
 </p>
 
 <p>
-  <strong>Promotion:</strong>
+  <strong>Promoção:</strong>
   <%= @reservation.promotion %>
 </p>
 
-<%= link_to 'Edit', edit_reservation_path(@reservation) %> |
-<%= link_to 'Back', reservations_path %>
+<%= link_to 'Editar', edit_reservation_path(@reservation) %> | <%= link_to 'Voltar', reservations_path %>

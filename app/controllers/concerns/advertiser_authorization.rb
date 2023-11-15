@@ -1,5 +1,4 @@
-module AdvertiserAuthorization
-  extend ActiveSupport::Concern
+module AdvertiserAuthorization extend ActiveSupport::Concern
 
   def current_advertiser_owns?(promotion)
     promotion and advertiser_signed_in? and promotion.advertiser == current_advertiser

@@ -1,7 +1,7 @@
 <%= form_for(@promotion, html: {multipart: true}) do |f| %>
 <% if @promotion.errors.any? %>
 <div id="error_explanation">
-	<h2><%= pluralize(@promotion.errors.count, "error") %> prohibited this promotion from being saved:</h2>
+	<h2><%= pluralize(@promotion.errors.count, "erro") %> impediram a promoção de ser salva:</h2>
 
 	<ul>
 		<% @promotion.errors.full_messages.each do |message| %>
@@ -44,7 +44,7 @@
 	<%= f.date_select :valid_to %>
 	&nbsp;
 	<%= check_box_tag(:unlimited_time,'' , @promotion.unlimited_time?)%>
-	<%= label_tag :unlimited_time, "Unlimited time"%>
+	<%= label_tag :unlimited_time, "Tempo ilimitado"%>
 </div>
 <div class="field">
 	<%= f.label :quantity %>
@@ -52,7 +52,7 @@
 	<%= f.number_field :quantity %>
 	&nbsp;
 	<%= check_box_tag :unlimited_quantity, '', @promotion.unlimited_quantity?%>
-	<%= label_tag :unlimited_quantity, "Unlimited quantitiy"%>
+	<%= label_tag :unlimited_quantity, "Quantidade ilimitada"%>
 </div>
 <div class="field">
 	<%= f.label :price %>
@@ -60,6 +60,6 @@
 	<%= f.number_field :price, :class => 'text_field', :step => 0.1 %>
 </div>
 <div class="actions">
-	<%= f.submit %>
+	<%= f.submit 'Enviar' %>
 </div>
 <% end %>

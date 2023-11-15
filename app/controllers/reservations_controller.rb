@@ -1,10 +1,10 @@
 class ReservationsController < ApplicationController
+  include RequestInfo
   before_action :set_reservation, only: [:show, :edit, :update, :destroy, :redeem]
-  before_filter :authenticate_customer!, except: [:redeem], unless: :json_request?
-  before_filter :authenticate_advertiser!, only: [:redeem]
-  skip_before_filter :verify_authenticity_token, if: :json_request?
+  before_action :authenticate_customer!, except: [:redeem], unless: :json_request?
+  before_action :authenticate_advertiser!, only: [:redeem]
+  skip_before_action :verify_authenticity_token, if: :json_request?
   acts_as_token_authentication_handler_for Customer, except: [:redeem]
-
 
   # GET /reservations
   # GET /reservations.json
@@ -35,9 +35,8 @@ class ReservationsController < ApplicationController
 
     respond_to do |format|
       if @reservation.make_reservation!
-        @reservations = current_customer.reservations
-        format.html { redirect_to reservations_url, notice: 'Promotion reserved successfully.' }
-        format.json { render json: {status: :ok, message: 'Promotion reserved successfully.'} }
+        format.html { redirect_to reservations_url, notice: 'Reserva realizada com sucesso!' }
+        format.json { render json: {status: :ok, message: 'Reserva realizada com sucesso!'} }
       else
         format.html { redirect_to @reservation.promotion, flash: {errors: @reservation.errors.full_messages} }
         format.json { render json: {errors: @reservation.errors, status: :fail}.to_json }
@@ -50,7 +49,7 @@ class ReservationsController < ApplicationController
   def update
     respond_to do |format|
       if @reservation.update(reservation_params)
-        format.html { redirect_to @reservation, notice: 'Reservation was successfully updated.' }
+        format.html { redirect_to @reservation, notice: 'Reserva atualizada com sucesso!' }
         format.json { render :show, status: :ok, location: @reservation }
       else
         format.html { render :edit }
@@ -64,7 +63,7 @@ class ReservationsController < ApplicationController
   def destroy
     respond_to do |format|
       if @reservation.cancel!
-        format.html { redirect_to reservations_url, notice: 'Reservation was successfully destroyed.' }
+        format.html { redirect_to reservations_url, notice: 'Reserva excluída com sucesso!' }
         format.json { render json: {status: :ok}.to_json }
       else
         format.html { redirect_to reservations_url }
@@ -76,8 +75,8 @@ class ReservationsController < ApplicationController
   def redeem
     respond_to do |format|
       if @reservation.redeem!
-        format.html { redirect_to my_reservations_url, notice: 'Reservation was redeemed successfully' }
-        format.json { render json: {status: 'ok', message: 'Reservation was redeemed successfully'} }
+        format.html { redirect_to my_reservations_url, notice: 'Reserva resgatada com sucesso!' }
+        format.json { render json: {status: 'ok', message: 'Reserva resgatada com sucesso!'} }
       else
         format.html { redirect_to my_reservations_url, flash: {errors: @reservation.errors.full_messages} }
         format.json { render json: {status: 'fail', errors: @reservation.errors} }
@@ -94,9 +93,5 @@ class ReservationsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def reservation_params
     params.require(:reservation).permit(:promotion_id)
-  end
-
-  def json_request?
-    request.format.json?
   end
 end

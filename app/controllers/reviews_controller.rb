@@ -1,14 +1,15 @@
 class ReviewsController < ApplicationController
+  include RequestInfo
   before_action :set_reservation
   before_action :set_review, only: [:show, :edit, :update, :destroy]
-  before_filter :authenticate_customer!, unless: :json_request?
-  skip_before_filter :verify_authenticity_token, if: :json_request?
+  before_action :authenticate_customer!, unless: :json_request?
+  skip_before_action :verify_authenticity_token, if: :json_request?
   acts_as_token_authentication_handler_for Customer
 
   # GET /reviews
   # GET /reviews.json
   def index
-    @reviews = Review.all
+    @reviews = @reservation.reviews
   end
 
   # GET /reviews/1
@@ -32,8 +33,8 @@ class ReviewsController < ApplicationController
     @review = @reservation.build_review(review_params)
     respond_to do |format|
       if @review.save!
-        format.html {redirect_to reservations_url, notice: 'Review created successfully!'}
-        format.json {render json: {status: :ok, message: 'Review created successfully!.'}}
+        format.html {redirect_to reservations_url, notice: 'Avaliação cadastrada com sucesso!'}
+        format.json {render json: {status: :ok, message: 'Avaliação cadastrada com sucesso!.'}}
       else
         format.html {render :new }
         format.json {render json: {errors: @review.errors, status: :fail}.to_json}
@@ -44,9 +45,10 @@ class ReviewsController < ApplicationController
   # PATCH/PUT /reviews/1
   # PATCH/PUT /reviews/1.json
   def update
+    authorize_review_alteration!
     respond_to do |format|
       if @review.update(review_params)
-        format.html { redirect_to @review, notice: 'Review was successfully updated.' }
+        format.html { redirect_to reservations_url, notice: 'Avaliação atualizada com sucesso.' }
         format.json { render :show, status: :ok, location: @review }
       else
         format.html { render :edit }
@@ -60,23 +62,23 @@ class ReviewsController < ApplicationController
   def destroy
     @review.destroy
     respond_to do |format|
-      format.html { redirect_to reviews_url, notice: 'Review was successfully destroyed.' }
+      format.html { redirect_to reviews_url, notice: 'Review excluído com sucesso!' }
       format.json { render json: {status: :ok} }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_review
-      @review = Review.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_review
+    @review = Review.find(params[:id])
+  end
 
   def set_reservation
     @reservation = Reservation.find(params[:reservation_id])
   end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def review_params
-      params.require(:review).permit(:reservation_id, :text, :rating)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def review_params
+    params.require(:review).permit(:reservation_id, :text, :rating)
+  end
 end

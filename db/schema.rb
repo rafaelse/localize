@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -31,17 +30,16 @@ ActiveRecord::Schema.define(version: 20151130134258) do
     t.string   "name"
     t.string   "address"
     t.string   "city"
-    t.string   "estate"
+    t.string   "state"
     t.string   "country"
     t.string   "zip_code"
     t.decimal  "lat"
     t.decimal  "lng"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.index ["email"], name: "index_advertisers_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_advertisers_on_reset_password_token", unique: true, using: :btree
   end
-
-  add_index "advertisers", ["email"], name: "index_advertisers_on_email", unique: true, using: :btree
-  add_index "advertisers", ["reset_password_token"], name: "index_advertisers_on_reset_password_token", unique: true, using: :btree
 
   create_table "categories", force: :cascade do |t|
     t.string  "name"
@@ -63,11 +61,10 @@ ActiveRecord::Schema.define(version: 20151130134258) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "authentication_token"
+    t.index ["authentication_token"], name: "index_customers_on_authentication_token", using: :btree
+    t.index ["email"], name: "index_customers_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_customers_on_reset_password_token", unique: true, using: :btree
   end
-
-  add_index "customers", ["authentication_token"], name: "index_customers_on_authentication_token", using: :btree
-  add_index "customers", ["email"], name: "index_customers_on_email", unique: true, using: :btree
-  add_index "customers", ["reset_password_token"], name: "index_customers_on_reset_password_token", unique: true, using: :btree
 
   create_table "promotions", force: :cascade do |t|
     t.string   "title"
@@ -84,22 +81,20 @@ ActiveRecord::Schema.define(version: 20151130134258) do
     t.integer  "category_id"
     t.decimal  "price"
     t.integer  "advertiser_id"
+    t.index ["advertiser_id"], name: "index_promotions_on_advertiser_id", using: :btree
+    t.index ["category_id"], name: "index_promotions_on_category_id", using: :btree
   end
-
-  add_index "promotions", ["advertiser_id"], name: "index_promotions_on_advertiser_id", using: :btree
-  add_index "promotions", ["category_id"], name: "index_promotions_on_category_id", using: :btree
 
   create_table "reservations", force: :cascade do |t|
     t.integer  "customer_id"
     t.integer  "promotion_id"
-    t.datetime "created_at",                                  null: false
-    t.datetime "updated_at",                                  null: false
-    t.uuid     "code",         default: "uuid_generate_v4()"
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
+    t.uuid     "code",         default: -> { "uuid_generate_v4()" }
     t.boolean  "redeemed",     default: false
+    t.index ["customer_id"], name: "index_reservations_on_customer_id", using: :btree
+    t.index ["promotion_id"], name: "index_reservations_on_promotion_id", using: :btree
   end
-
-  add_index "reservations", ["customer_id"], name: "index_reservations_on_customer_id", using: :btree
-  add_index "reservations", ["promotion_id"], name: "index_reservations_on_promotion_id", using: :btree
 
   create_table "reviews", force: :cascade do |t|
     t.integer  "reservation_id"
@@ -107,9 +102,8 @@ ActiveRecord::Schema.define(version: 20151130134258) do
     t.integer  "rating"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.index ["reservation_id"], name: "index_reviews_on_reservation_id", using: :btree
   end
-
-  add_index "reviews", ["reservation_id"], name: "index_reviews_on_reservation_id", using: :btree
 
   add_foreign_key "promotions", "advertisers"
   add_foreign_key "promotions", "categories"

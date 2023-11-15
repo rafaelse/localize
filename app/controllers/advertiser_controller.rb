@@ -1,5 +1,5 @@
 class AdvertiserController < ApplicationController
-  before_filter :authenticate_advertiser!
+  before_action :authenticate_advertiser!
 
   def my_promotions
     @promotions = current_advertiser.promotions
