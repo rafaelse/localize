@@ -47,7 +47,7 @@
   <h2>Descrição</h2>
 
   <div id="description">
-    <%= @promotion.description %>
+    <%= sanitize(@promotion.description) %>
   </div>
 </div>
 

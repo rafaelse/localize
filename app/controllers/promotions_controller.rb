@@ -99,7 +99,7 @@ class PromotionsController < ApplicationController
   def categories_tree(categories)
     result = []
     categories.each do |category|
-      result << [('&nbsp;' * category.depth).html_safe + category.name, category.id]
+      result << [('&nbsp;' * category.depth * 2).html_safe + category.name, category.id]
       result += categories_tree(category.subcategories.order(:name)) unless category.subcategories.blank?
     end
     result
