@@ -131,6 +131,8 @@ GEM
       mimemagic (~> 0.3.0)
       terrapin (~> 0.6.0)
     pg (1.5.4)
+    puma (6.4.0)
+      nio4r (~> 2.0)
     racc (1.7.3)
     rack (2.2.8)
     rack-test (2.1.0)
@@ -209,6 +211,8 @@ GEM
     turbolinks-source (5.2.0)
     tzinfo (1.2.11)
       thread_safe (~> 0.1)
+    tzinfo-data (1.2023.3)
+      tzinfo (>= 1.0.0)
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
     warden (1.2.9)
@@ -235,6 +239,7 @@ DEPENDENCIES
   jquery-rails
   paperclip (~> 5.0)
   pg
+  puma
   rails (= 5.2.1)
   rqrcode_png!
   sass-rails (~> 5.0)
@@ -243,6 +248,7 @@ DEPENDENCIES
   spring
   trix
   turbolinks
+  tzinfo-data
   uglifier (>= 1.3.0)
   web-console (~> 3.0)
 

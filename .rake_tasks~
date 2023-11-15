@@ -1,4 +1,5 @@
 about
+active_storage:install
 app:template
 app:update
 assets:clean[keep]
@@ -42,6 +43,8 @@ secret
 stats
 test
 test:db
+test:system
 time:zones[country_or_offset]
 tmp:clear
 tmp:create
+yarn:install

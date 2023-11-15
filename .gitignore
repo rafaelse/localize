@@ -13,7 +13,8 @@
 /tmp
 
 Geolocation API ket.txt
-
 .idea
-
 public/system
+.ruby-version
+.env
+/storage

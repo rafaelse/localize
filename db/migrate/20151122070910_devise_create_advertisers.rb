@@ -1,4 +1,4 @@
-class DeviseCreateAdvertisers < ActiveRecord::Migration
+class DeviseCreateAdvertisers < ActiveRecord::Migration[5.2]
   def change
     create_table(:advertisers) do |t|
       ## Database authenticatable
