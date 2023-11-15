@@ -12,6 +12,7 @@ class Customers::SessionsController < Devise::SessionsController
      self.resource = warden.authenticate!(auth_options)
      set_flash_message(:notice, :signed_in) if is_navigational_format?
      sign_in(resource_name, resource)
+     sign_out current_advertiser if current_advertiser
 
      respond_to do |format|
        format.json { render :status => 200,

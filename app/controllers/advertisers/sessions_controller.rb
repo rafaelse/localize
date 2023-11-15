@@ -7,9 +7,18 @@ class Advertisers::SessionsController < Devise::SessionsController
   # end
 
   # POST /resource/sign_in
-  # def create
-  #   super
-  # end
+  def create
+    self.resource = warden.authenticate!(auth_options)
+    set_flash_message(:notice, :signed_in) if is_navigational_format?
+    sign_in(resource_name, resource)
+    sign_out current_customer if current_customer
+
+    respond_to do |format|
+      format.json { render :status => 200,
+                           :json => {:auth_token => current_customer.authentication_token }}
+      format.html { respond_with resource, :location => after_sign_in_path_for(resource)}
+    end
+  end
 
   # DELETE /resource/sign_out
   # def destroy
