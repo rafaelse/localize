@@ -1,7 +1,7 @@
 class Advertiser < ActiveRecord::Base
   has_many :promotions
   acts_as_mappable
-  before_validation :geocode_address, :on => [:create, :update]
+  # before_validation :geocode_address, :on => [:create, :update]
   validates :name, :address, :city, :state, :country, presence: true
 
   # Include default devise modules. Others available are:
