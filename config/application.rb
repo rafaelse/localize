@@ -24,5 +24,7 @@ module Localize
 
     config.time_zone = 'Brasilia'
     config.i18n.default_locale = 'pt-BR'
+
+    config.action_mailer.default_url_options = { :host => "prototipo.localize.com.br" }
   end
 end
