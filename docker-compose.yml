@@ -1,5 +1,3 @@
-version: '3.4'
-
 services:
   app:
     build:
@@ -11,9 +9,12 @@ services:
       - "3000:3000"
     volumes:
       - app_data:/app/public/system
+      - gem_cache:/usr/local/bundle/gems
     env_file: .env
     environment:
       RAILS_ENV: development
+      POSTGRES_HOST: database
+      POSTGRES_PORT: 5432
 
   database:
     image: postgres:12.1
@@ -24,3 +25,5 @@ services:
 volumes:
   app_data:
   db_data:
+  gem_cache:
+

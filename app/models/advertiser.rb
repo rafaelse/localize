@@ -1,5 +1,7 @@
 class Advertiser < ActiveRecord::Base
   has_many :promotions
+  has_many :reviews, through: :promotions
+
   acts_as_mappable
   # before_validation :geocode_address, :on => [:create, :update]
   validates :name, :address, :city, :state, :country, presence: true
@@ -11,6 +13,10 @@ class Advertiser < ActiveRecord::Base
 
   def full_address
     "#{self.address}, #{self.city}, #{self.state} #{self.zip_code}, #{self.country}"
+  end
+
+  def review_avg
+    reviews.average(:rating) if reviews.any?
   end
 
   private

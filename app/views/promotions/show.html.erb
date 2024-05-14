@@ -12,7 +12,7 @@
 <% end %>
 
 <div id="promotion_show">
-  <h2><%= @promotion.advertiser.name %></h2>
+  <h2><%= @promotion.advertiser.name %> <%= " (#{format('%.1f', @promotion.advertiser.review_avg)} \u{2b50})" if @promotion.advertiser.review_avg %></h2>
   <h3><%= "#{@promotion.title} (#{@promotion.category.name})" %></h3>
   <%= image_tag @promotion.banner.url(:medium) %>
 
@@ -53,7 +53,7 @@
 </div>
 
 <% unless @promotion.reviews.empty? %>
-  <h2 style="text-align: center">Avaliações</h2>
+  <h2 style="text-align: center">Avaliações <%= " (#{format('%.1f', @promotion.review_avg)} \u{2b50})" if @promotion.review_avg %></h2>
 
   <%= render 'reviews/reviews' %>
 <% end %>

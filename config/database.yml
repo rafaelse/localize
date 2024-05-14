@@ -1,30 +1,24 @@
 default: &default
   adapter: postgresql
   encoding: unicode
+  username: <%= ENV.fetch("POSTGRES_USER") { "postgres" } %>
+  password: <%= ENV.fetch('POSTGRES_PASSWORD') %>
+  host: <%= ENV.fetch('POSTGRES_HOST') { "localhost" } %>
+  port: <%= ENV.fetch('POSTGRES_PORT') { "5432" } %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  timeout: 5000
-  host: 127.0.0.1
 
 development:
   <<: *default
-  database: localize_development
-  host: <%= ENV['LOCALIZE_DEV_POSTGRES_HOST'] %>
-  port: <%= ENV.fetch("LOCALIZE_DEV_POSTGRES_PORT") { 5432 } %>
-  username: <%= ENV['LOCALIZE_DEV_POSTGRES_USER'] %>
-  password: <%= ENV['LOCALIZE_DEV_POSTGRES_PASSWORD'] %>
+  database: app_development
 
 test:
   <<: *default
-  database: localize_test
-  host: <%= ENV['LOCALIZE_TEST_POSTGRES_HOST'] %>
-  port: <%= ENV.fetch("LOCALIZE_TEST_POSTGRES_PORT") { 5432 } %>
-  username: <%= ENV['LOCALIZE_TEST_POSTGRES_USER'] %>
-  password: <%= ENV['LOCALIZE_TEST_POSTGRES_PASSWORD'] %>
+  database: app_test
 
 production:
   <<: *default
-  database: localize_production
-  host: <%= ENV['POSTGRES_HOST'] %>
-  port: <%= ENV.fetch("POSTGRES_PORT") { 5432 } %>
+  #  database: app_production
+  database: <%= ENV['POSTGRES_DATABASE'] %>
   username: <%= ENV['POSTGRES_USER'] %>
   password: <%= ENV['POSTGRES_PASSWORD'] %>
+  host: <%= ENV['POSTGRES_HOST'] %>

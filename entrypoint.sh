@@ -21,3 +21,5 @@ rm -f tmp/pids/server.pid
 echo "Starting rails server..."
 bundle exec rails server -b 0.0.0.0
 
+
+

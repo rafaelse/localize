@@ -44,6 +44,10 @@ class Promotion < ActiveRecord::Base
     self.valid_to != nil and Date.today > self.valid_to
   end
 
+  def review_avg
+    reviews.average(:rating) if reviews.any?
+  end
+
   class Error < StandardError
   end
 

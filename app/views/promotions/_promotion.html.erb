@@ -1,10 +1,11 @@
 <div class="promotion">
-  <h2><%= promotion.advertiser.name %></h2>
+  <h2><%= promotion.advertiser.name %> <%= " (#{format('%.1f', promotion.advertiser.review_avg)} \u{2b50})" if promotion.advertiser.review_avg %>
+  </h2>
   <%= link_to promotion_path(promotion) do %>
     <%= image_tag promotion.banner.url(:thumb) %>
-    <h3 class="title"><%= promotion.title %> </h3>
+    <h3 class="title"><%= promotion.title %> <%= " (#{format('%.1f', promotion.review_avg)} \u{2b50})" if promotion.review_avg %></h3>
   <% end %>
-  <span class="category"><%= "(#{promotion.category.name})" %></span>
+  <span class="category"><i><%= "#{promotion.category.name}" %></i></span>
   <div class="baseline">
     <%= display_quantity(promotion) %>
     <%= display_time(promotion) %>

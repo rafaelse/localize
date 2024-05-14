@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
   # get 'reservation/:id/reviews', to: 'review#list', as: 'reviews'
 
+  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
+
   resources :reservations do
     resources :reviews
   end

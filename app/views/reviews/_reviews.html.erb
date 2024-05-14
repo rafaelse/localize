@@ -3,7 +3,7 @@
       <div class="review clearfix">
         <div class="header">
           <span class="author"><%= review.reservation.customer.name %></span>
-          <span class="rating">Nota => <%= review.rating %> </span>
+          <span class="rating"><%= "\u{2b50}" * review.rating %> </span>
         </div>
         <div class="body">
           <%= review.text %>
