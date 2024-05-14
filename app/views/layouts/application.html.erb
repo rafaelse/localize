@@ -28,17 +28,7 @@
     <% if alert %>
         <div class="alert"><%= alert %></div>
     <% end %>
-    <% if flash[:errors] %>
-        <div id="error_explanation">
-          <ul>
-            <% flash[:errors].each do |message| %>
-                <li>
-                  <%= message %>
-                </li>
-            <% end %>
-          </ul>
-        </div>
-    <% end %>
+    <%= render 'shared/errors' %>
     <%= yield %>
   </div>
 </div>

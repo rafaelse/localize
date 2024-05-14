@@ -36,7 +36,7 @@ RUN gem install bundler -v $BUNDLER_VERSION
 
 WORKDIR $APP_HOME
 
-COPY Gemfile Gemfile.lock ./
+COPY Gemfile ./
 
 RUN echo 'gem: --no-ri --no-rdoc' > ~/.gemrc
 RUN bundle config --local build.sassc --disable-march-tune-native

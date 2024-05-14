@@ -1,7 +1,7 @@
 class ReviewsController < ApplicationController
   include RequestInfo
   before_action :set_reservation
-  before_action :set_review, only: [:show, :edit, :update, :destroy]
+  before_action :set_review, only: [:show, :edit, :update]
   before_action :authenticate_customer!, unless: :json_request?
   skip_before_action :verify_authenticity_token, if: :json_request?
   acts_as_token_authentication_handler_for Customer
@@ -54,16 +54,6 @@ class ReviewsController < ApplicationController
         format.html { render :edit }
         format.json { render json: @review.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # DELETE /reviews/1
-  # DELETE /reviews/1.json
-  def destroy
-    @review.destroy
-    respond_to do |format|
-      format.html { redirect_to reviews_url, notice: 'Review excluído com sucesso!' }
-      format.json { render json: {status: :ok} }
     end
   end
 

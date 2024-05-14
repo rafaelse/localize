@@ -9,7 +9,6 @@ services:
       - "3000:3000"
     volumes:
       - app_data:/app/public/system
-      - gem_cache:/usr/local/bundle/gems
     env_file: .env
     environment:
       RAILS_ENV: development
@@ -25,5 +24,4 @@ services:
 volumes:
   app_data:
   db_data:
-  gem_cache:
 

@@ -25,19 +25,19 @@ class Reservation < ActiveRecord::Base
   end
 
   def cancel!
-    if promotion.unlimited_quantity? or self.redeemed?
+    if self.redeemed?
       errors.add('Reserva', ' já resgatada!') if self.redeemed?
+      false
     else
-      promotion.quantity = promotion.quantity + 1
-      self.transaction do
-        unless promotion.update_attribute(:quantity, promotion.quantity)
-          raise ActiveRecord::Rollback
+      unless promotion.unlimited_quantity?
+        promotion.quantity = promotion.quantity + 1
+        self.transaction do
+          raise ActiveRecord::Rollback unless promotion.update_attribute(:quantity, promotion.quantity)
         end
-        self.destroy
       end
+      self.destroy
     end
   end
-
 
   def qr_code
     RQRCode::QRCode.new(self.code)

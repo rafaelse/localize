@@ -1,24 +1,25 @@
 Rails.application.routes.draw do
 
-  # get 'reservation/:id/reviews', to: 'review#list', as: 'reviews'
+  root 'promotions#index'
+  resources :promotions
 
-  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
-
-  resources :reservations do
-    resources :reviews
+  resources :reservations, only: [:index, :create, :destroy] do
+    resources :reviews, except: [:destroy]
   end
+  post 'reservations/:id/redeem', to: 'reservations#redeem', as: 'redeem_reservation'
+
   get 'my/promotions', to: 'advertiser#my_promotions'
   get 'my/reservations', to: 'advertiser#my_reservations'
-  post 'reservations/:id/redeem', to: 'reservations#redeem', as: 'redeem_reservation'
 
   devise_for :advertisers, controllers: {registrations: 'advertisers/registrations'}
   devise_for :customers, controllers: {sessions: 'customers/sessions', registrations: 'customers/registrations'}
-  resources :promotions
+
+  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'promotions#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

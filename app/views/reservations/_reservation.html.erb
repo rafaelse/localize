@@ -22,7 +22,7 @@
         <% unless reservation.promotion.expired? %>
             <% if reservation.redeemed? %>
                 <% if reservation.review %>
-                  <%= link_to 'Avaliar', edit_reservation_review_path(reservation, reservation.review), class: 'button' %>
+                  <%= link_to 'Atualizar', edit_reservation_review_path(reservation, reservation.review), class: 'button' %>
                 <% else %>
                   <%= link_to "Avaliar", new_reservation_review_path(reservation), class: 'button' %>
                 <% end %>

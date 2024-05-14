@@ -1,6 +1,6 @@
 class ReservationsController < ApplicationController
   include RequestInfo
-  before_action :set_reservation, only: [:show, :edit, :update, :destroy, :redeem]
+  before_action :set_reservation, only: [:show, :edit, :destroy, :redeem]
   before_action :authenticate_customer!, except: [:redeem], unless: :json_request?
   before_action :authenticate_advertiser!, only: [:redeem]
   skip_before_action :verify_authenticity_token, if: :json_request?
@@ -44,20 +44,6 @@ class ReservationsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /reservations/1
-  # PATCH/PUT /reservations/1.json
-  def update
-    respond_to do |format|
-      if @reservation.update(reservation_params)
-        format.html { redirect_to @reservation, notice: 'Reserva atualizada com sucesso!' }
-        format.json { render :show, status: :ok, location: @reservation }
-      else
-        format.html { render :edit }
-        format.json { render json: @reservation.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   # DELETE /reservations/1
   # DELETE /reservations/1.json
   def destroy
@@ -66,7 +52,7 @@ class ReservationsController < ApplicationController
         format.html { redirect_to reservations_url, notice: 'Reserva excluída com sucesso!' }
         format.json { render json: {status: :ok}.to_json }
       else
-        format.html { redirect_to reservations_url }
+        format.html { redirect_to reservations_url, flash: {errors: @reservation.errors.full_messages} }
         format.json { render json: {errors: @reservation.errors, status: :fail}.to_json }
       end
     end
