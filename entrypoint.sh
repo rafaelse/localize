@@ -10,7 +10,7 @@ done
 
 # # If the database exists, migrate. Otherwise setup (create and migrate)
 echo "Running database migrations..."
-bundle exec rails db:migrate 2>/dev/null || bundle exec rails db:create db:migrate db:seed
+bundle exec rails db:migrate:status 2>/dev/null || bundle exec rails db:create db:migrate db:seed
 echo "Finished running database migrations."
 
 # # Remove a potentially pre-existing server.pid for Rails.

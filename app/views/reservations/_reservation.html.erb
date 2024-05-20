@@ -5,15 +5,16 @@
   </div>
   <div class="reservation_info">
     <ul>
-      <li style="font-size: 1.5em; margin-bottom: 10px"><strong><%= link_to reservation.promotion.title, promotion_path(reservation.promotion) %></strong></li>
+      <li style="font-size: 1.5em; margin-bottom: 10px">
+        <strong><%= link_to reservation.promotion.title, promotion_path(reservation.promotion) %></strong></li>
       <% if customer_signed_in? %>
         <li>Válida <strong><%= display_time(reservation.promotion) %></strong></li>
-          <% if reservation.redeemed? %>
+        <% if reservation.redeemed? %>
           <li>Resgatada em <strong><%= reservation.updated_at.strftime('%d/%m/%Y') %></strong></li>
           <li>De <strong><%= reservation.promotion.advertiser.name %></strong></li>
-          <% else %>
+        <% else %>
           <li>Resgate de <strong><%= reservation.promotion.advertiser.name %></strong></li>
-          <% end %>
+        <% end %>
         <li>No endereço <strong><%= reservation.promotion.advertiser.full_address %></strong></li>
       <% elsif advertiser_signed_in? %>
         <li>Consumidor: <strong><%= reservation.customer.name %></strong></li>
@@ -27,21 +28,21 @@
   </div>
   <div class="actions">
     <% if customer_signed_in? %>
-        <% unless reservation.promotion.expired? %>
-            <% if reservation.redeemed? %>
-                <% if reservation.review %>
-                  <%= link_to 'Avaliada', edit_reservation_review_path(reservation, reservation.review), class: 'button' %>
-                <% else %>
-                  <%= link_to "Avaliar", new_reservation_review_path(reservation), class: 'button' %>
-                <% end %>
-            <% else %>
-                <%= button_to "Cancelar", reservation_path(reservation), data: {confirm: "Tem certeza?"}, method: :delete %>
-            <% end %>
+      <% unless reservation.promotion.expired? %>
+        <% if reservation.redeemed? %>
+          <% if reservation.review %>
+            <%= link_to 'Avaliada', edit_reservation_review_path(reservation, reservation.review), class: 'button' %>
+          <% else %>
+            <%= link_to "Avaliar", new_reservation_review_path(reservation), class: 'button' %>
+          <% end %>
+        <% else %>
+          <%= button_to "Cancelar", reservation_path(reservation), data: { confirm: "Tem certeza?" }, method: :delete %>
         <% end %>
+      <% end %>
     <% elsif advertiser_signed_in? %>
-        <% unless reservation.promotion.expired? %>
-            <%= button_to "Resgatar", redeem_reservation_path(id: reservation.id), data: {confirm: "Tem certeza?"}, method: :post %>
-        <% end %>
+      <% unless reservation.promotion.expired? %>
+        <%= button_to "Resgatar", redeem_reservation_path(id: reservation.id), data: { confirm: "Tem certeza?" }, method: :post %>
+      <% end %>
     <% end %>
   </div>
 </div>
