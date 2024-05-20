@@ -41,7 +41,8 @@ body {
 #top #application_title {
     position: absolute;
     bottom: 0;
-    line-height: 1em;
+    line-height: 1.2em;
+    font-size: 4em;
 }
 
 #top #user_section {

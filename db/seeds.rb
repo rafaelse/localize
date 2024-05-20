@@ -17,7 +17,7 @@ password = 'prototest&123'
 
 loja_doces = Advertiser.new
 loja_doces.name = 'Loja de Doces'
-loja_doces.email = 'doces@prototipo.localize.com'
+loja_doces.email = 'doces@prototipo.pp.com'
 loja_doces.password = password
 loja_doces.address = 'Rua Rui Barbosa, 001, Centro'
 loja_doces.city = 'Jaboticabal'
@@ -28,7 +28,7 @@ loja_doces.save!(validate: false)
 
 loja_roupas = Advertiser.new
 loja_roupas.name = 'Loja de Roupas'
-loja_roupas.email = 'roupas@prototipo.localize.com'
+loja_roupas.email = 'roupas@prototipo.pp.com'
 loja_roupas.password = password
 loja_roupas.address = 'Av. Pintos, 001, Centro'
 loja_roupas.city = 'Jaboticabal'
@@ -210,11 +210,13 @@ promotions.each { |promotion| promotion.save(validate: false) }
 
 15.times do
   gender = Faker::Gender.binary_type
-  name = gender == 'Masculino' ? "#{Faker::Name.male_first_name} #{Faker::Name.last_name}" : "#{Faker::Name.female_first_name} #{Faker::Name.last_name}"
-  email =  "#{I18n.transliterate(name.split(' ').join('_').downcase)}@prototipo.localize.com"
+  name = gender == 'Masculino' ? Faker::Name.male_first_name : Faker::Name.female_first_name
+  name += " #{Faker::Name.last_name}"
+  email =  "#{I18n.transliterate(name.split(' ').join('_').downcase)}@prototipo.pp.com"
   customer = Customer.create!(name: name, email: email, password: password)
   2.times do
-    reservation = gender == 'Masculino' ? Reservation.create!(promotion: promotions[rand(0..4)], customer: customer, redeemed: true) : Reservation.create!(promotion: promotions.sample, customer: customer, redeemed: true)
+    promotion = gender == 'Masculino' ? promotions[rand(0..4)] : promotions.sample
+    reservation = gender == 'Masculino' ? Reservation.create!(promotion: promotion, customer: customer, redeemed: true) : Reservation.create!(promotion: promotion, customer: customer, redeemed: true)
     Review.create!(reservation: reservation, text: Faker::Lorem.sentence, rating: rand(3..5))
   end
 end

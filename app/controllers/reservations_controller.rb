@@ -9,7 +9,7 @@ class ReservationsController < ApplicationController
   # GET /reservations
   # GET /reservations.json
   def index
-    @reservations = current_customer.reservations
+    @reservations = current_customer.reservations.order(created_at: :desc)
   end
 
   # GET /reservations/1

@@ -5,15 +5,23 @@
   </div>
   <div class="reservation_info">
     <ul>
-      <li><%= link_to reservation.promotion.title, promotion_path(reservation.promotion) %></li>
+      <li style="font-size: 1.5em; margin-bottom: 10px"><strong><%= link_to reservation.promotion.title, promotion_path(reservation.promotion) %></strong></li>
       <% if customer_signed_in? %>
-          <li>Válida <%= display_time(reservation.promotion) %></li>
-          <li><%= "Resgate de #{reservation.promotion.advertiser.name}" %></li>
-          <li><%= "Em #{reservation.promotion.advertiser.full_address}" %></li>
+        <li>Válida <strong><%= display_time(reservation.promotion) %></strong></li>
+          <% if reservation.redeemed? %>
+          <li>Resgatada em <strong><%= reservation.updated_at.strftime('%d/%m/%Y') %></strong></li>
+          <li>De <strong><%= reservation.promotion.advertiser.name %></strong></li>
+          <% else %>
+          <li>Resgate de <strong><%= reservation.promotion.advertiser.name %></strong></li>
+          <% end %>
+        <li>No endereço <strong><%= reservation.promotion.advertiser.full_address %></strong></li>
       <% elsif advertiser_signed_in? %>
-          <li>Consumidor: <%= reservation.customer.name %></li>
-          <li>Data da Reserva: <%= reservation.created_at.strftime('%d/%m/%Y') %></li>
-          <li>Válida <%= display_time(reservation.promotion) %></li>
+        <li>Consumidor: <strong><%= reservation.customer.name %></strong></li>
+        <li>Data da Reserva: <strong><%= reservation.created_at.strftime('%d/%m/%Y') %></strong></li>
+        <li>Válida <strong><%= display_time(reservation.promotion) %></strong></li>
+        <% if reservation.redeemed? %>
+          <li>Data do resgate: <strong><%= reservation.updated_at.strftime('%d/%m/%Y') %></strong></li>
+        <% end %>
       <% end %>
     </ul>
   </div>
@@ -22,7 +30,7 @@
         <% unless reservation.promotion.expired? %>
             <% if reservation.redeemed? %>
                 <% if reservation.review %>
-                  <%= link_to 'Atualizar', edit_reservation_review_path(reservation, reservation.review), class: 'button' %>
+                  <%= link_to 'Avaliada', edit_reservation_review_path(reservation, reservation.review), class: 'button' %>
                 <% else %>
                   <%= link_to "Avaliar", new_reservation_review_path(reservation), class: 'button' %>
                 <% end %>

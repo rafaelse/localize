@@ -6,13 +6,13 @@ class Reservation < ActiveRecord::Base
   has_one :review
 
   def make_reservation!
-    #byebug
-    if promotion.sold_out? or promotion.expired? or not customer or second_reservation? or not promotion.started?
-      errors.add('Início', 'em data futura!')
-      errors.add('Reserva ', 'já realizada!') if second_reservation?
-      errors.add('Consumidor', ' algum consumidor realizando a reserva!') unless customer
-      errors.add('Promoção', ' esgotada!') if promotion.sold_out?
-      errors.add('Validade', ' expirada!') if promotion.expired?
+    errors.add('Promoção', 'não iniciada!') unless promotion.started?
+    errors.add('Reserva ', 'já realizada!') if second_reservation?
+    errors.add('Consumidor', ' não informado!') unless customer
+    errors.add('Promoção', ' esgotada!') if promotion.sold_out?
+    errors.add('Validade', ' expirada!') if promotion.expired?
+
+    if errors.any?
       false
     else
       self.transaction do
@@ -61,6 +61,6 @@ class Reservation < ActiveRecord::Base
   private
 
   def second_reservation?
-    Reservation.find_by(promotion_id: promotion.id, customer_id: customer.id)
+    Reservation.find_by(promotion_id: promotion.id, customer_id: customer.id, redeemed: false)
   end
 end

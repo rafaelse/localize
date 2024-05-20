@@ -6,6 +6,6 @@ class AdvertiserController < ApplicationController
   end
 
   def my_reservations
-    @reservations = Reservation.joins(:promotion).where('redeemed = false and advertiser_id = ?', current_advertiser.id)
+    @reservations = Reservation.joins(:promotion).where('redeemed = false and advertiser_id = ?', current_advertiser.id).order('created_at DESC')
   end
 end

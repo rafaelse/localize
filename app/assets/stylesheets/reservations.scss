@@ -15,4 +15,20 @@
   .reservation_code {
     text-align: center;
   }
+
+  .reservation_info {
+    font-size: 1.2em;
+
+    ul {
+      list-style: none;
+
+      li {
+        padding: 5px;
+
+        strong {
+          font-weight: lighter;
+        }
+      }
+    }
+  }
 }
